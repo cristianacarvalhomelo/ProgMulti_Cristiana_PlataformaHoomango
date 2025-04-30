@@ -1,5 +1,7 @@
-package com.hoomango;
+package com.hoomango.service;
 
+import com.hoomango.view.Cuidador;
+import com.hoomango.view.Tutor;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

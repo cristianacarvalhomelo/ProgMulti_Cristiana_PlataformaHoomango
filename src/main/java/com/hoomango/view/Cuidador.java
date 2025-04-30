@@ -1,9 +1,9 @@
-package com.hoomango;
+package com.hoomango.view;
 
 import jakarta.persistence.*;
 
 @Entity
-public class Tutor {
+public class Cuidador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +25,3 @@ public class Tutor {
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
 }
-

@@ -1,5 +1,6 @@
-package com.hoomango;
+package com.hoomango.view;
 
+import com.hoomango.service.UsuarioService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.inject.Inject;
