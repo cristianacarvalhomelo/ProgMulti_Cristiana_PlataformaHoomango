@@ -20,11 +20,7 @@ public class CuidadorView {
         return "login.xhtml?faces-redirect=true";
     }
 
-    public Cuidador getCuidador() {
-        return cuidador;
-    }
+    public Cuidador getCuidador() { return cuidador; }
 
-    public void setCuidador(Cuidador cuidador) {
-        this.cuidador = cuidador;
-    }
+    public void setCuidador(Cuidador cuidador) { this.cuidador = cuidador; }
 }

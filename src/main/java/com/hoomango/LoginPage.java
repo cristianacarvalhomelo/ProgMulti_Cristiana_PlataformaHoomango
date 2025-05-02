@@ -46,7 +46,6 @@ public class LoginPage implements Serializable {
         return "login.xhtml?faces-redirect=true";
     }
 
-    // getters e setters
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
