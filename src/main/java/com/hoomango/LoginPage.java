@@ -1,6 +1,12 @@
 package com.hoomango;
 
+import com.hoomango.model.Cuidador;
+import com.hoomango.model.Tutor;
+import com.hoomango.service.UsuarioService;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 
@@ -12,22 +18,35 @@ public class LoginPage implements Serializable {
     private String senha;
     private boolean logado = false;
 
+    @Inject
+    private UsuarioService usuarioService;
+
+    private Tutor tutorLogado;
+    private Cuidador cuidadorLogado;
+
     public String login() {
-        if ("admin@hoomango.com".equals(email) && "1234".equals(senha)) {
+        tutorLogado = usuarioService.autenticarTutor(email, senha);
+        cuidadorLogado = usuarioService.autenticarCuidador(email, senha);
+
+        if (tutorLogado != null) {
+            logado = true;
+            return "home.xhtml?faces-redirect=true";
+        } else if (cuidadorLogado != null) {
             logado = true;
             return "home.xhtml?faces-redirect=true";
         } else {
-            jakarta.faces.context.FacesContext.getCurrentInstance()
-                    .addMessage(null, new jakarta.faces.application.FacesMessage("Login inválido"));
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage("Login inválido"));
             return null;
         }
     }
 
     public String logout() {
-        jakarta.faces.context.FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login.xhtml?faces-redirect=true";
     }
 
+    // getters e setters
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
@@ -35,5 +54,7 @@ public class LoginPage implements Serializable {
     public void setSenha(String senha) { this.senha = senha; }
 
     public boolean isLogado() { return logado; }
-}
 
+    public Tutor getTutorLogado() { return tutorLogado; }
+    public Cuidador getCuidadorLogado() { return cuidadorLogado; }
+}

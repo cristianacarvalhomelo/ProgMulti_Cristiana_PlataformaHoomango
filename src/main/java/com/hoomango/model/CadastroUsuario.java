@@ -1,4 +1,4 @@
-package com.hoomango.view;
+package com.hoomango.model;
 
 import com.hoomango.service.UsuarioService;
 import jakarta.enterprise.context.RequestScoped;
@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 
 @Named
 @RequestScoped
-public class CadastroUsuarioView {
+public class CadastroUsuario {
 
     private String nome;
     private String email;
