@@ -61,5 +61,26 @@ public class UsuarioService implements Serializable {
     public void salvarCuidador(Cuidador cuidador) {
         em.persist(cuidador);
     }
+
+    public Tutor buscarTutorPorEmail(String email) {
+        try {
+            return em.createQuery("SELECT t FROM Tutor t WHERE t.email = :email", Tutor.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            return null;
+        }
+    }
+
+    public Cuidador buscarCuidadorPorEmail(String email) {
+        try {
+            return em.createQuery("SELECT c FROM Cuidador c WHERE c.email = :email", Cuidador.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            return null;
+        }
+    }
+
 }
 
