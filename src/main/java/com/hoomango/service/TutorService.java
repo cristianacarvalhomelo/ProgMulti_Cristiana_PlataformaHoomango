@@ -37,7 +37,6 @@ public class TutorService implements Serializable {
     }
 
     public Tutor buscarTutorLogado() {
-        // Exemplo simples — você pode ajustar para pegar o usuário da sessão, etc.
         String emailLogado = obterEmailUsuarioLogado();
         return em.createQuery("SELECT t FROM Tutor t WHERE t.email = :email", Tutor.class)
                 .setParameter("email", emailLogado)
@@ -45,7 +44,6 @@ public class TutorService implements Serializable {
     }
 
     private String obterEmailUsuarioLogado() {
-        // Pega da sessão (ajuste conforme seu login)
         return (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("emailUsuarioLogado");
     }
 
