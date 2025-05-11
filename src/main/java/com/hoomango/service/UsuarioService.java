@@ -82,5 +82,28 @@ public class UsuarioService implements Serializable {
         }
     }
 
+    public Tutor buscarTutorPorEmailESenha(String email, String senha) {
+        try {
+            return em.createQuery("SELECT t FROM Tutor t WHERE t.email = :email AND t.senha = :senha", Tutor.class)
+                    .setParameter("email", email)
+                    .setParameter("senha", senha)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Cuidador buscarCuidadorPorEmailESenha(String email, String senha) {
+        try {
+            return em.createQuery("SELECT c FROM Cuidador c WHERE c.email = :email AND c.senha = :senha", Cuidador.class)
+                    .setParameter("email", email)
+                    .setParameter("senha", senha)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
 }
 

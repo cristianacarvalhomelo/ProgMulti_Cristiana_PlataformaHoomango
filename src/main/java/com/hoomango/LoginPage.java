@@ -21,28 +21,31 @@ public class LoginPage implements Serializable {
 
     @Inject
     private UsuarioService usuarioService;
+
+    @Inject
     private EmailService emailService;
-    private String emailRecuperacao;
 
     private Tutor tutorLogado;
     private Cuidador cuidadorLogado;
 
     public String login() {
-        tutorLogado = usuarioService.autenticarTutor(email, senha);
-        cuidadorLogado = usuarioService.autenticarCuidador(email, senha);
-
-        if (tutorLogado != null) {
+        Tutor tutor = usuarioService.buscarTutorPorEmailESenha(email, senha);
+        if (tutor != null) {
             logado = true;
-            return "home.xhtml?faces-redirect=true";
-        } else if (cuidadorLogado != null) {
-            logado = true;
-            return "home.xhtml?faces-redirect=true";
-        } else {
-            FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage("Login inválido"));
-            return null;
+            return "tutor/homeTutor.xhtml?faces-redirect=true";
         }
+
+        Cuidador cuidador = usuarioService.buscarCuidadorPorEmailESenha(email, senha);
+        if (cuidador != null) {
+            logado = true;
+            return "cuidador/homeCuidador.xhtml?faces-redirect=true";
+        }
+
+        jakarta.faces.context.FacesContext.getCurrentInstance()
+                .addMessage(null, new jakarta.faces.application.FacesMessage("E-mail ou senha inválidos."));
+        return null;
     }
+
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -61,16 +64,16 @@ public class LoginPage implements Serializable {
     public Cuidador getCuidadorLogado() { return cuidadorLogado; }
 
     public void recuperarSenha() {
-        Tutor tutor = usuarioService.buscarTutorPorEmail(emailRecuperacao);
-        Cuidador cuidador = usuarioService.buscarCuidadorPorEmail(emailRecuperacao);
+        Tutor tutor = usuarioService.buscarTutorPorEmail(email);
+        Cuidador cuidador = usuarioService.buscarCuidadorPorEmail(email);
 
         if (tutor != null) {
-            emailService.enviarEmail(emailRecuperacao, "Recuperação de Senha",
+            emailService.enviarEmail(email, "Recuperação de Senha",
                     "Sua senha cadastrada é: " + tutor.getSenha());
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Senha enviada para seu e-mail."));
         } else if (cuidador != null) {
-            emailService.enviarEmail(emailRecuperacao, "Recuperação de Senha",
+            emailService.enviarEmail(email, "Recuperação de Senha",
                     "Sua senha cadastrada é: " + cuidador.getSenha());
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Senha enviada para seu e-mail."));

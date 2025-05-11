@@ -1,13 +1,15 @@
 package com.hoomango.service;
 
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 @Stateless
-public class EmailService {
+public class EmailService implements Serializable {
 
     public void enviarEmail(String destinatario, String assunto, String mensagem) {
 
@@ -19,7 +21,7 @@ public class EmailService {
 
         Session session = Session.getInstance(props, new jakarta.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("seuemail@gmail.com", "suasenha");
+                return new PasswordAuthentication("cristianacarvalhomelo@gmail.com", "eezr mlvk ozpl rnoc");
             }
         });
 
@@ -29,7 +31,7 @@ public class EmailService {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
             message.setSubject(assunto);
             message.setText(mensagem);
-
+            System.out.println("TESTE CRIS "+message);
             Transport.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
