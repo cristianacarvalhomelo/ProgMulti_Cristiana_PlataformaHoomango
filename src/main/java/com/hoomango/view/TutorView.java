@@ -1,6 +1,9 @@
 package com.hoomango.view;
 
+import com.hoomango.LoginPage;
+import com.hoomango.model.Cuidador;
 import com.hoomango.model.Tutor;
+import com.hoomango.service.CuidadorService;
 import com.hoomango.service.TutorService;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
@@ -8,30 +11,68 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 
 @Named("tutorView")
 @RequestScoped
 public class TutorView {
 
-    private Tutor tutor = new Tutor();
+    private Tutor tutor;
 
     @Inject
     private TutorService tutorService;
 
-    public String salvar() {
-        tutorService.salvar(tutor);
-        return "login.xhtml?faces-redirect=true";
+    @Inject
+    private CuidadorService cuidadorService;
+
+    @Inject
+    private LoginPage loginPage;
+
+    @PostConstruct
+    public void init() {
+        tutor = loginPage.getTutorLogado();
+        if (tutor == null) {
+            tutor = new Tutor();
+        }
     }
 
-    public void atualizarPerfil() {
+    public String salvar() {
+        try {
+            Tutor existenteTutor = tutorService.buscarPorEmail(tutor.getEmail());
+            Cuidador existenteCuidador = cuidadorService.buscarPorEmail(tutor.getEmail());
+
+            if (existenteTutor != null || existenteCuidador != null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail já cadastrado em outra conta!", null));
+                return null;
+            }
+            tutorService.salvar(tutor);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro realizado com sucesso!", null));
+
+            return "login.xhtml?faces-redirect=true";
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage("msgs",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao realizar cadastro.", null));
+            return null;
+        }
+    }
+
+
+    public String atualizarPerfil() {
         try {
             tutorService.atualizar(tutor);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil atualizado!", null));
+            loginPage.setTutorLogado(tutor);
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil atualizado com sucesso!", null));
+
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao atualizar perfil.", null));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao atualizar perfil: " + e.getMessage(), null));
         }
+
+        return null;
     }
 
     public Tutor getTutor() {

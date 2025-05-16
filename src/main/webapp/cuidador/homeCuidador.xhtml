@@ -1,15 +1,69 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Home Cuidador</title>
-</h:head>
-<h:body>
-    <h1>Bem-vindo, #{cuidadorView.cuidador.nome}!</h1>
+    <style>
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #19bfed;
+            color: white;
+        }
 
-    <h:form>
-        <h:commandButton value="Atualizar Perfil" action="atualizarPerfil.xhtml" />
-        <h:commandButton value="Sair" action="#{loginPage.logout}" />
-    </h:form>
+        .profile-avatar {
+            cursor: pointer;
+        }
+
+        .welcome-text {
+            font-size: 20px;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="top-bar">
+        <h:outputText value="HoomanGo - Cuidador" styleClass="welcome-text"/>
+
+        <a href="atualizarPerfil.xhtml" style="text-decoration: none;">
+            <p:avatar shape="circle"
+                      styleClass="profile-avatar"
+                      style="background-color: #ffc107; color: black;"
+                      size="large"
+                      rendered="#{loginPage.cuidadorLogado != null}"
+                      label="#{loginPage.cuidadorLogado.nome.substring(0,1).toUpperCase()}" />
+        </a>
+
+    </div>
+
+    <div style="padding: 30px; text-align: center;">
+        <h:outputText value="Bem-vindo, #{loginPage.cuidadorLogado.nome}!" rendered="#{loginPage.cuidadorLogado != null}" style="font-size: 24px;" />
+
+        <br/><br/>
+
+        <h:form>
+            <p:commandButton value="Visualizar Meus Serviços"
+                             icon="pi pi-paw"
+                             styleClass="p-button-rounded p-button-info"
+                             action="servicos.xhtml?faces-redirect=true" />
+
+            <br/><br/>
+
+            <p:commandButton value="Logout"
+                             action="#{loginPage.logout}"
+                             icon="pi pi-sign-out"
+                             styleClass="p-button-danger"/>
+        </h:form>
+    </div>
+
 </h:body>
 </html>

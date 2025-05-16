@@ -1,15 +1,70 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Home Tutor</title>
-</h:head>
-<h:body>
-    <h1>Bem-vindo, #{tutorView.tutor.nome}!</h1>
+    <style>
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #0edaed;
+            color: white;
+        }
 
-    <h:form>
-        <h:commandButton value="Atualizar Perfil" action="atualizarPerfil.xhtml" />
-        <h:commandButton value="Sair" action="#{loginPage.logout}" />
-    </h:form>
+        .profile-avatar {
+            cursor: pointer;
+        }
+
+        .welcome-text {
+            font-size: 20px;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="top-bar">
+        <h:outputText value="HoomanGo - Tutor" styleClass="welcome-text"/>
+
+        <h:form>
+            <p:commandLink action="atualizarPerfil.xhtml?faces-redirect=true" style="text-decoration: none;">
+                <p:avatar label="#{loginPage.tutorLogado.nome.substring(0,1).toUpperCase()}"
+                          shape="circle"
+                          styleClass="profile-avatar"
+                          style="background-color: #ffc107; color: black;"
+                          size="large"
+                          rendered="#{loginPage.tutorLogado != null}"/>
+            </p:commandLink>
+        </h:form>
+    </div>
+
+    <div style="padding: 30px; text-align: center;">
+        <h:outputText value="Bem-vindo, #{loginPage.tutorLogado.nome}!" rendered="#{loginPage.tutorLogado != null}" style="font-size: 24px;" />
+
+        <br/><br/>
+
+        <h:form>
+            <p:commandButton value="Visualizar Meus Pets"
+                             icon="pi pi-paw"
+                             styleClass="p-button-rounded p-button-info"
+                             action="pets.xhtml?faces-redirect=true" />
+
+            <br/><br/>
+
+            <p:commandButton value="Logout"
+                             action="#{loginPage.logout}"
+                             icon="pi pi-sign-out"
+                             styleClass="p-button-danger"/>
+        </h:form>
+    </div>
+
 </h:body>
 </html>
