@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Pets</title>
+    <style>
+        button.ui-button {
+            margin-right: .5rem;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <h:form id="formPet">
+
+        <p:panel header="Meus Pets" style="max-width: 800px; margin: 0 auto;">
+
+            <p:commandButton value="Novo Pet" icon="pi pi-plus" styleClass="p-button-success"
+                             onclick="PF('dialogPet').show();" type="button" />
+
+            <p:dataTable value="#{petView.listaPets}" var="pet" style="margin-top: 20px;"
+                         emptyMessage="Nenhum pet cadastrado." responsiveLayout="scroll">
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{pet.nome}" />
+                </p:column>
+
+                <p:column headerText="Espécie">
+                    <h:outputText value="#{pet.especie}" />
+                </p:column>
+
+                <p:column headerText="Raça">
+                    <h:outputText value="#{pet.raca}" />
+                </p:column>
+
+                <p:column headerText="Nascimento">
+                    <h:outputText value="#{pet.dataNascimento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Observações">
+                    <h:outputText value="#{pet.observacoes}" />
+                </p:column>
+
+                <p:column headerText="Ações" style="text-align: center; width: 180px;">
+                    <p:commandButton icon="pi pi-pencil" title="Editar"
+                                     actionListener="#{petView.prepararEdicao(pet)}"
+                                     oncomplete="PF('dialogPet').show();"
+                                     update=":formPet"
+                                     process="@this"
+                                     styleClass="p-button-rounded p-button-info ui-button" />
+
+                    <p:commandButton icon="pi pi-trash" title="Excluir"
+                                     actionListener="#{petView.setPetSelecionado(pet)}"
+                                     oncomplete="PF('confirmDialog').show();"
+                                     update=":formPet:confirmDialog"
+                                     process="@this"
+                                     styleClass="p-button-rounded p-button-danger ui-button" />
+                </p:column>
+
+            </p:dataTable>
+
+            <p:confirmDialog id="confirmDialog"
+                             header="Confirmação"
+                             severity="alert"
+                             widgetVar="confirmDialog">
+                <h:outputText value="Você tem certeza de que deseja excluir esse pet?" />
+
+                <br/><br/>
+
+                <p:commandButton value="Sim"
+                                 actionListener="#{petView.excluir(petView.petSelecionado)}"
+                                 process="@this"
+                                 update=":formPet :formPet:messages"
+                                 oncomplete="PF('confirmDialog').hide();"
+                                 styleClass="p-button-rounded p-button-danger" />
+
+                <p:commandButton value="Não"
+                                 onclick="PF('confirmDialog').hide();" type="button" />
+            </p:confirmDialog>
+
+            <p:button value="Voltar"
+                             icon="pi pi-paw"
+                             styleClass="p-button-rounded p-button-info"
+                             outcome="homeTutor.xhtml"/>
+
+        </p:panel>
+
+        <p:dialog header="Cadastro de Pet" widgetVar="dialogPet" modal="true" closable="true"
+                  resizable="false" id="dialogPet">
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <h:outputLabel value="Nome:" />
+                    <p:inputText value="#{petView.pet.nome}" required="true" />
+
+                    <h:outputLabel value="Espécie:" />
+                    <p:inputText value="#{petView.pet.especie}" />
+
+                    <h:outputLabel value="Raça:" />
+                    <p:inputText value="#{petView.pet.raca}" />
+
+                    <h:outputLabel value="Data de Nascimento:" />
+                    <p:datePicker value="#{petView.pet.dataNascimento}" pattern="dd/MM/yyyy" />
+
+                    <h:outputLabel value="Observações:" />
+                    <p:inputTextarea value="#{petView.pet.observacoes}" rows="3" autoResize="true" />
+
+                </h:panelGrid>
+
+                <p:separator />
+
+                <p:commandButton value="Salvar"
+                                 actionListener="#{petView.salvarOuAtualizar}"
+                                 update=":formPet"
+                                 process="@form"
+                                 oncomplete="PF('dialogPet').hide();"
+                                 icon="pi pi-check"
+                                 styleClass="p-button-success" />
+        </p:dialog>
+
+    </h:form>
+
+</h:body>
+</html>

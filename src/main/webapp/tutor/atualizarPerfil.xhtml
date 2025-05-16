@@ -10,10 +10,10 @@
 
 <h:body>
 
-    <h:form>
+    <h:form enctype="multipart/form-data">
         <p:panel header="Atualizar Perfil - Tutor" style="max-width: 500px; margin: 0 auto;">
 
-            <p:messages id="msgs" showDetail="true" closable="true" />
+            <p:messages id="msgs" globalOnly="true" closable="true" />
 
             <h:panelGrid columns="2" cellpadding="5">
 
@@ -30,11 +30,41 @@
 
             <p:separator />
 
-            <p:commandButton value="Atualizar" action="#{tutorView.atualizarPerfil}" update="msgs" icon="pi pi-check" styleClass="p-button-success" />
+            <p:commandButton value="Atualizar" action="#{tutorView.atualizarPerfil}" update="msgs"
+                             icon="pi pi-check" styleClass="p-button-success" />
+
+            <p:button value="Voltar"
+                      icon="pi pi-paw"
+                      style="margin-left: 260px"
+                      styleClass="p-button-rounded p-button-info"
+                      outcome="homeTutor.xhtml"/>
+
+            <p:separator />
+
+            <p:commandButton value="Excluir Conta"
+                             onclick="PF('confirmDialog').show();"
+                             styleClass="p-button-danger" />
+
+            <p:confirmDialog id="confirmDialog"
+                             header="Confirmação"
+                             severity="alert"
+                             widgetVar="confirmDialog">
+                <h:outputText value="Você tem certeza de que deseja excluir sua conta?" style="text-align: center"/>
+
+                <br/><br/>
+
+                <p:commandButton value="Sim"
+                                 action="#{loginPage.excluirConta}"
+                                 style="margin-right: 213px"
+                                 ajax="false"
+                                 process="@this"/>
+
+                <p:commandButton value="Não"
+                                 onclick="PF('confirmDialog').hide();" type="button" />
+            </p:confirmDialog>
 
         </p:panel>
     </h:form>
-
 
 </h:body>
 </html>

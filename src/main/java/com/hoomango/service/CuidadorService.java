@@ -1,10 +1,9 @@
 package com.hoomango.service;
 
 import com.hoomango.model.Cuidador;
-import com.hoomango.model.Tutor;
 import jakarta.ejb.Stateless;
-import jakarta.faces.context.FacesContext;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
 import java.io.Serializable;
@@ -24,27 +23,33 @@ public class CuidadorService implements Serializable {
         return em.createQuery("SELECT c FROM Cuidador c", Cuidador.class).getResultList();
     }
 
-    public Cuidador buscarPorEmail(String email) {
-        List<Cuidador> resultado = em.createQuery(
-                        "SELECT c FROM Cuidador c WHERE c.email = :email", Cuidador.class)
-                .setParameter("email", email)
-                .getResultList();
+    public void excluir(Cuidador cuidador) {
+        Cuidador cuidadorGerenciado = em.merge(cuidador);
+        em.remove(cuidadorGerenciado);
+    }
 
-        return resultado.isEmpty() ? null : resultado.get(0);
+    public Cuidador buscarPorEmail(String email) {
+        try {
+            return em.createQuery("SELECT c FROM Cuidador c WHERE c.email = :email", Cuidador.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public void atualizar(Cuidador cuidador) {
         em.merge(cuidador);
     }
 
-    public Cuidador buscarCuidadorLogado() {
-        String emailLogado = obterEmailUsuarioLogado();
-        return em.createQuery("SELECT c FROM Cuidador c WHERE c.email = :email", Cuidador.class)
-                .setParameter("email", emailLogado)
-                .getSingleResult();
-    }
-
-    private String obterEmailUsuarioLogado() {
-        return (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("emailUsuarioLogado");
+    public Cuidador autenticar(String email, String senha) {
+        try {
+            return em.createQuery("SELECT c FROM Cuidador c WHERE c.email = :email AND c.senha = :senha", Cuidador.class)
+                    .setParameter("email", email)
+                    .setParameter("senha", senha)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.hoomango.service;
 
 import jakarta.ejb.Stateless;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
