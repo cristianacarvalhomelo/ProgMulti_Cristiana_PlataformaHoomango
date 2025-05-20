@@ -52,7 +52,7 @@ public class RecuperacaoSenhaService {
             tokenService.salvar(token);
 
             emailService.enviarEmail(cuidador.getEmail(), "Recuperação de Senha",
-                    "Clique para redefinir: https://hoomango.com/reset-senha?t=" + token.getToken());
+                    "Clique para redefinir: http://localhost:8080/hoomango-1.0-SNAPSHOT/resetSenha.xhtml?t=" + token.getToken());
 
         } else {
             throw new IllegalArgumentException("E-mail não encontrado.");

@@ -1,6 +1,7 @@
 package com.hoomango.service;
 
 import com.hoomango.model.Cuidador;
+import com.hoomango.model.Tutor;
 import com.hoomango.util.PasswordUtil;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
