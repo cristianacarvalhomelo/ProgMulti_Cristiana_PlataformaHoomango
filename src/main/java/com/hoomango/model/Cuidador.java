@@ -23,8 +23,6 @@ public class Cuidador {
 
     private String telefone;
 
-    private String pix;
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -40,6 +38,4 @@ public class Cuidador {
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
 
-    public String getPix() { return pix; }
-    public void setPix(String pix) { this.pix = pix; }
 }

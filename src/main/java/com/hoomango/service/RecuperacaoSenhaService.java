@@ -3,6 +3,7 @@ package com.hoomango.service;
 import com.hoomango.model.Cuidador;
 import com.hoomango.model.PasswordResetToken;
 import com.hoomango.model.Tutor;
+import com.hoomango.util.PasswordUtil;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -67,11 +68,11 @@ public class RecuperacaoSenhaService {
 
         if (token.getTutor() != null) {
             Tutor tutor = token.getTutor();
-            tutor.setSenha(novaSenha);
+            tutor.setSenha(PasswordUtil.hashPassword(novaSenha));
             tutorService.atualizar(tutor);
         } else if (token.getCuidador() != null) {
             Cuidador cuidador = token.getCuidador();
-            cuidador.setSenha(novaSenha);
+            cuidador.setSenha(PasswordUtil.hashPassword(novaSenha));
             cuidadorService.atualizar(cuidador);
         }
 
