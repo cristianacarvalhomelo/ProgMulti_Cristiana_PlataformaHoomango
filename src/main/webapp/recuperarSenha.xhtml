@@ -11,35 +11,35 @@
 
         <p:panel header="Recuperação de senha" style="max-width: 400px; margin: 100px auto; padding: 20px;">
 
-        <h:outputLabel value="Informe seu e-mail:" for="email" />
-        <br/>
-        <p:inputText id="email" value="#{loginPage.email}" required="true"
-                     style="width:100%; max-width:300px; margin-top:5px;" />
+            <h:outputLabel value="Informe seu e-mail:" for="email" />
+            <br/>
+            <p:inputText id="email" value="#{recuperarSenhaView.email}" required="true"
+                         style="width:100%; max-width:300px; margin-top:5px;" />
 
-        <br/><br/>
+            <br/><br/>
 
-        <p:commandButton value="Enviar Senha por E-mail"
-                         action="#{loginPage.recuperarSenha()}"
-                         icon="pi pi-envelope"
-                         styleClass="p-button-success"
-                         style="width:100%; margin-bottom:10px;"
-                         update="msgs" />
+            <p:commandButton value="Enviar Senha por E-mail"
+                             action="#{recuperarSenhaView.recuperarSenha()}"
+                             icon="pi pi-envelope"
+                             styleClass="p-button-success"
+                             style="width:100%; margin-bottom:10px;"
+                             update="msgs" />
 
-        <br/>
 
-        <p:button value="Voltar para Login" outcome="login.xhtml"
-                  icon="pi pi-sign-in"
-                  styleClass="p-button-secondary"
-                  style="width:100%;" />
+            <br/>
 
-        <br/><br/>
+            <p:button value="Voltar para Login" outcome="login.xhtml"
+                      icon="pi pi-sign-in"
+                      styleClass="p-button-secondary"
+                      style="width:100%;" />
 
-        <p:messages id="msgs" globalOnly="true" closable="true" />
+            <br/><br/>
+
+            <p:messages id="msgs" globalOnly="true" closable="true" />
 
         </p:panel>
 
     </h:form>
-
 
 </h:body>
 </html>

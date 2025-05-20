@@ -13,6 +13,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @Named("loginPage")
 @SessionScoped
@@ -30,9 +31,6 @@ public class LoginPage implements Serializable {
 
     @Inject
     private TutorService tutorService;
-
-    @Inject
-    private EmailService emailService;
 
     public String login() {
         Tutor tutor = tutorService.autenticar(email, senha);
@@ -63,27 +61,6 @@ public class LoginPage implements Serializable {
         cuidadorLogado = null;
         SessionUtil.invalidarSessao();
         return "/login.xhtml?faces-redirect=true";
-    }
-
-
-    public void recuperarSenha() {
-        Tutor tutor = tutorService.buscarPorEmail(email);
-        Cuidador cuidador = cuidadorService.buscarPorEmail(email);
-
-        if (tutor != null) {
-            emailService.enviarEmail(email, "Recuperação de Senha",
-                    "Sua senha cadastrada é: " + tutor.getSenha());
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage("Senha enviada para seu e-mail."));
-        } else if (cuidador != null) {
-            emailService.enviarEmail(email, "Recuperação de Senha",
-                    "Sua senha cadastrada é: " + cuidador.getSenha());
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage("Senha enviada para seu e-mail."));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "E-mail não encontrado.", null));
-        }
     }
 
     public String excluirConta() {
