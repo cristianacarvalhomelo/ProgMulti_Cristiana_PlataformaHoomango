@@ -1,70 +1,30 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Home Tutor</title>
-    <style>
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #0edaed;
-            color: white;
-        }
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout2/template.xhtml">
 
-        .profile-avatar {
-            cursor: pointer;
-        }
-
-        .welcome-text {
-            font-size: 20px;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-    </style>
-</h:head>
-
-<h:body>
-
-    <div class="top-bar">
-        <h:outputText value="HoomanGo - Tutor" styleClass="welcome-text"/>
-
-        <h:form>
-            <p:commandLink action="atualizarPerfil.xhtml?faces-redirect=true" style="text-decoration: none;">
-                <p:avatar label="#{loginPage.tutorLogado.nome.substring(0,1).toUpperCase()}"
-                          shape="circle"
-                          styleClass="profile-avatar"
-                          style="background-color: #ffc107; color: black;"
-                          size="large"
-                          rendered="#{loginPage.tutorLogado != null}"/>
-            </p:commandLink>
-        </h:form>
-    </div>
-
-    <div style="padding: 30px; text-align: center;">
-        <h:outputText value="Bem-vindo, #{loginPage.tutorLogado.nome}!" rendered="#{loginPage.tutorLogado != null}" style="font-size: 24px;" />
-
-        <br/><br/>
-
-        <h:form>
-            <p:commandButton value="Visualizar Meus Pets"
-                             icon="pi pi-paw"
-                             styleClass="p-button-rounded p-button-info"
-                             action="pets.xhtml?faces-redirect=true" />
+    <ui:define name="content">
+        <div style="padding: 30px; text-align: center;">
+            <h:outputText value="🐾 Olá, #{loginPage.tutorLogado.nome}!"
+                          rendered="#{loginPage.tutorLogado != null}"
+                          style="font-size: 32px; font-weight: bold;" />
 
             <br/><br/>
 
-            <p:commandButton value="Logout"
-                             action="#{loginPage.logout}"
-                             icon="pi pi-sign-out"
-                             styleClass="p-button-danger"/>
-        </h:form>
-    </div>
+            <p:panel header="Seja bem-vindo ao HoomanGo!" style="max-width: 600px; margin: 0 auto;">
+                <h:outputText value="Aqui você pode gerenciar seus pets, encontrar cuidadores e acompanhar suas solicitações." />
+            </p:panel>
 
-</h:body>
-</html>
+            <br/>
+
+            <p:panel header="Dica do Dia 🐶" style="max-width: 600px; margin: 0 auto;">
+                <h:outputText value="Passeios diários deixam seu pet mais feliz e saudável!" />
+            </p:panel>
+
+            <br/>
+
+        </div>
+    </ui:define>
+</ui:composition>

@@ -76,9 +76,12 @@ public class PetView implements Serializable {
         }
     }
 
-
     public void prepararEdicao(Pet petSelecionado) {
         this.pet = petSelecionado;
+    }
+
+    public void cancelar() {
+        this.pet = new Pet();
     }
 
     public Pet getPet() {

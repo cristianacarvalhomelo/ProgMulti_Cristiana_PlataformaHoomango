@@ -1,7 +1,6 @@
 package com.hoomango.service;
 
 import com.hoomango.model.Cuidador;
-import com.hoomango.model.Tutor;
 import com.hoomango.util.PasswordUtil;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -60,5 +59,13 @@ public class CuidadorService implements Serializable {
     public void atualizar(Cuidador cuidador) {
         em.merge(cuidador);
     }
+
+    public Cuidador buscarComServicos(Long id) {
+        return em.createQuery(
+                        "SELECT c FROM Cuidador c LEFT JOIN FETCH c.servicos WHERE c.id = :id", Cuidador.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
 
 }

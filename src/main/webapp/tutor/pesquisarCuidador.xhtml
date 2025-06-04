@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout2/template.xhtml">
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewAction action="#{cuidadorView.init()}"/>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="pageTitle">Cuidadores</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="consulta">
+            <h:form id="formConsulta">
+                <p:dataTable var="c" value="#{cuidadorView.listaCuidadores}"
+                             emptyMessage="Nenhum cuidador encontrado"
+                             rowKey="#{c.id}" rows="5" paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"
+                             currentPageReportTemplate="Listando de {startRecord} até {endRecord} de {totalRecords}">
+
+                    <p:column headerText="Nome" sortBy="#{c.nome}"
+                              filterMatchMode="contains" filterBy="#{c.nome}">
+                        <p:outputLabel value="#{c.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="Email" sortBy="#{c.email}"
+                              filterMatchMode="contains" filterBy="#{c.email}">
+                        <p:outputLabel value="#{c.email}"/>
+                    </p:column>
+
+                    <p:column headerText="Serviços"
+                              sortBy="#{c.servicosDescricao}"
+                              filterBy="#{c.servicosDescricao}"
+                              filterMatchMode="contains">
+                        <ui:repeat value="#{c.servicos}" var="servico">
+                            <p>#{servico.descricao} — R$ #{servico.preco}</p><br/>
+                        </ui:repeat>
+                    </p:column>
+
+
+                    <p:column headerText="Telefone" sortBy="#{c.telefone}"
+                              filterMatchMode="contains" filterBy="#{c.telefone}">
+                        <p:outputLabel value="#{c.telefone}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+    </ui:define>
+</ui:composition>

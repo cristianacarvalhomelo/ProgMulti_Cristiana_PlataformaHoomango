@@ -35,7 +35,7 @@
 
                 <p:column headerText="Ações" style="text-align: center; width: 180px;">
                     <p:commandButton icon="pi pi-pencil" title="Editar"
-                                     actionListener="#{servicoView.prepararEdicao}"
+                                     actionListener="#{servicoView.prepararEdicao(servico)}"
                                      oncomplete="PF('dialogServico').show();"
                                      update=":formServico"
                                      process="@this"
