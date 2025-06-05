@@ -25,7 +25,6 @@ public class Pet {
     @Size(min = 1, max = 30)
     private String raca;
 
-    @Size(min = 1, max = 500)
     private String observacoes;
 
     @ManyToOne
@@ -52,4 +51,5 @@ public class Pet {
 
     public String getObservacoes() { return observacoes; }
     public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
+
 }

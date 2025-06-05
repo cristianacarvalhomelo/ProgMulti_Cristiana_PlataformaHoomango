@@ -6,7 +6,6 @@
 
 <h:head>
     <title>Login - HoomanGo</title>
-    <h:outputStylesheet library="css" name="styles.css" />
 </h:head>
 
 <h:body style="background-color:#f2f2f2;">
@@ -30,7 +29,7 @@
             <br/>
 
             <p:commandButton value="Entrar" action="#{loginPage.login}" icon="pi pi-sign-in" update="msgs"
-                             styleClass="p-button-success" style="width:auto; margin: 0 auto; display:block;"/>
+                             styleClass="ui-button-success" style="width:auto; margin: 0 auto; display:block;"/>
 
             <br/><br/>
 
@@ -40,12 +39,12 @@
 
                 <h:form>
                     <p:button value="Cadastrar como Tutor" outcome="tutor/cadastroTutor.xhtml"
-                              styleClass="p-button p-button-raised button-tutor" style="width: 100%;" />
+                              styleClass="ui-button ui-button-raised button-tutor" style="width: 100%;" />
 
                 <br/><br/>
 
                     <p:button value="Cadastrar como Cuidador" outcome="cuidador/cadastroCuidador.xhtml"
-                              styleClass="p-button p-button-raised button-cuidador" style="width: 100%;" />
+                              styleClass="ui-button ui-button-raised button-cuidador" style="width: 100%;" />
                 </h:form>
 
         </p:panel>

@@ -42,7 +42,7 @@
 
                     <p:column headerText="Data Nascimento" sortBy="#{p.dataNascimento}">
                         <h:outputText value="#{p.dataNascimento}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                            <f:convertDateTime pattern="MM/yyyy" />
                         </h:outputText>
                     </p:column>
 
@@ -60,7 +60,7 @@
                                          oncomplete="PF('confirmDialog').show();"
                                          update=":formPets:confirmDialog"
                                          process="@this"
-                                         styleClass="p-button-rounded p-button-danger ui-button" />
+                                         styleClass="ui-button-rounded ui-button-danger ui-button" />
 
                     </p:column>
 
@@ -79,7 +79,7 @@
                                      process="@this"
                                      update=":formPets :formPets:messages"
                                      oncomplete="PF('confirmDialog').hide();"
-                                     styleClass="p-button-rounded p-button-danger" />
+                                     styleClass="ui-button-rounded ui-button-danger" />
 
                     <p:commandButton value="Não"
                                      onclick="PF('confirmDialog').hide();" type="button" />
@@ -105,11 +105,18 @@
                         <h:outputLabel for="raca" value="Raça:" />
                         <p:inputText id="raca" value="#{petView.pet.raca}" required="true" requiredMessage="Raça é obrigatória" maxlength="30" />
 
-                        <h:outputLabel for="dataNascimento" value="Data de Nascimento:" />
-                        <p:calendar id="dataNascimento" value="#{petView.pet.dataNascimento}" pattern="dd/MM/yyyy" showButtonPanel="true" />
+                        <h:outputLabel for="dataNascimento" value="Data Nascimento:" />
+                        <p:datePicker id="dataNascimento"
+                                      value="#{petView.pet.dataNascimento}"
+                                      pattern="MM/yyyy"
+                                      showButtonPanel="true"
+                                      view="month"
+                                      dateView="month"
+                                      yearNavigator="true"
+                                      monthNavigator="true"/>
 
                         <h:outputLabel for="observacoes" value="Observações:" />
-                        <p:inputTextarea id="observacoes" value="#{petView.pet.observacoes}" maxlength="500" rows="4" autoResize="true" />
+                        <p:inputTextarea id="observacoes" value="#{petView.pet.observacoes}" maxlength="500" rows="4" autoResize="true" required="false"/>
 
                     </p:panelGrid>
 

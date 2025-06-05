@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Cadastro - Cuidador - HoomanGo</title>
 </h:head>
@@ -19,6 +20,12 @@
             <p:outputLabel for="email" value="Email:" style="margin-top: 10px;" />
             <p:inputText id="email" value="#{cuidadorView.cuidador.email}" required="true"
                          placeholder="Digite seu e-mail" style="width: 100%;" />
+
+            <p:outputLabel for="endereco" value="Endereço:" style="margin-top: 10px;" />
+            <p:inputText id="endereco" value="#{cuidadorView.cuidador.endereco}" required="true"
+                         placeholder="Digite seu endereço" style="width: 100%;">
+                <f:validateRegex pattern="^[A-Za-zÀ-ÿ\s]{2,50}\s-\s[A-Z]{2}$"/>
+            </p:inputText>
 
             <p:outputLabel for="senha" value="Senha:" style="margin-top: 10px;" />
             <p:password id="senha" value="#{cuidadorView.cuidador.senha}" required="true"

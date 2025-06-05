@@ -1,6 +1,7 @@
 package com.hoomango.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class Cuidador {
 
     private String senha;
 
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]{2,50}\\s-\\s[A-Z]{2}$")
+    private String endereco;
+
     private String telefone;
 
     @OneToMany(mappedBy = "cuidador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -48,6 +52,9 @@ public class Cuidador {
     public List<Servico> getServicos() { return servicos; }
     public void setServicos(List<Servico> servicos) { this.servicos = servicos; }
 
+    public String getEndereco() { return endereco; }
+    public void setEndereco(String endereco) { this.endereco = endereco; }
+
     public String getServicosAsString() {
         if (servicos == null || servicos.isEmpty()) {
             return "Nenhum";
@@ -66,6 +73,5 @@ public class Cuidador {
                 .map(Servico::getDescricao)
                 .reduce("", (a, b) -> a + ", " + b);
     }
-
 
 }

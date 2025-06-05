@@ -60,7 +60,7 @@ public class LoginPage implements Serializable {
         tutorLogado = null;
         cuidadorLogado = null;
         SessionUtil.invalidarSessao();
-        return "/login.xhtml?faces-redirect=true";
+        return "/home.xhtml?faces-redirect=true";
     }
 
     public String excluirConta() {

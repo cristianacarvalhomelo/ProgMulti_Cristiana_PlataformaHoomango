@@ -1,46 +1,76 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Cadastro - Tutor - HoomanGo</title>
-</h:head>
-<h:body style="background-color:#f9f9f9;">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout3/template.xhtml">
 
-    <h:form style="display: flex; justify-content: center; margin-top: 50px;">
-        <p:panel header="Cadastro de Tutor" style="width: 400px;">
+    <ui:define name="title">
+        Cadastro de Tutor - HoomanGo
+    </ui:define>
 
-            <p:messages id="messages" globalOnly="true" closable="true"/>
+    <ui:define name="content">
 
-            <p:outputLabel for="nome" value="Nome:" />
-            <p:inputText id="nome" value="#{tutorView.tutor.nome}" required="true"
-                         placeholder="Digite seu nome" style="width: 100%;" />
+        <div style="display: flex; justify-content: center; align-items: center; gap: 40px; padding: 40px 20px; flex-wrap: wrap;">
 
-            <p:outputLabel for="email" value="Email:" style="margin-top: 10px;" />
-            <p:inputText id="email" value="#{tutorView.tutor.email}" required="true"
-                         placeholder="Digite seu e-mail" style="width: 100%;" />
+            <p:panel header="🐾 Bem-vindo ao HoomanGo!"
+                     style="width: 400px; min-width: 300px; box-sizing: border-box;">
 
-            <p:outputLabel for="senha" value="Senha:" style="margin-top: 10px;" />
-            <p:password id="senha" value="#{tutorView.tutor.senha}" required="true"
-                        feedback="true" promptLabel="Digite sua senha"
-                        weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte"
-                        style="width: 100%;" />
+                <h:outputText value="Cadastre-se como tutor e encontre cuidadores confiáveis para o seu pet."
+                              style="font-size: 18px; color: #555; margin-bottom: 15px; display: block; line-height: 1.4;" />
 
-            <p:separator style="margin: 20px 0;" />
+                <h:outputText value="Agende passeios, hospedagem ou cuidados personalizados. Acompanhe as atividades do seu pet e garanta tranquilidade para você e conforto para seu melhor amigo!"
+                              style="font-size: 16px; color: #666; display: block; line-height: 1.4;" />
+            </p:panel>
 
-            <p:commandButton value="Salvar" action="#{tutorView.salvar}" icon="pi pi-check" update="messages"
-                             styleClass="p-button-success" style="width: 100%; margin-top: 20px;"/>
+            <h:form style="width: 400px; min-width: 300px; box-sizing: border-box;">
+                <p:panel header="🐶 Cadastro de Tutor" style="height: 100%; box-sizing: border-box;">
 
-            <br/><br/>
+                    <p:messages id="messages" globalOnly="true" closable="true" style="margin-bottom: 15px;" />
 
-            <p:button value="Já tem conta? Faça login"
-                      outcome="/login.xhtml"
-                      icon="pi pi-sign-in"
-                      styleClass="p-button-secondary"
-                      style="width: 100%;" />
+                    <div style="margin-bottom: 15px;">
+                        <p:outputLabel for="nome" value="Nome:" style="display: inline-block; width: 80px; font-weight: bold;" />
+                        <p:inputText id="nome" value="#{tutorView.tutor.nome}" required="true"
+                                     placeholder="Digite seu nome"
+                                     style="width: calc(100% - 90px);" />
+                    </div>
 
-        </p:panel>
-    </h:form>
+                    <div style="margin-bottom: 15px;">
+                        <p:outputLabel for="email" value="Email:" style="display: inline-block; width: 80px; font-weight: bold;" />
+                        <p:inputText id="email" value="#{tutorView.tutor.email}" required="true"
+                                     placeholder="Digite seu e-mail"
+                                     style="width: calc(100% - 90px);" />
+                    </div>
 
-</h:body>
-</html>
+                    <div style="margin-bottom: 20px;">
+                        <p:outputLabel for="senha" value="Senha:" style="display: inline-block; width: 80px; font-weight: bold;" />
+                        <p:password id="senha" value="#{tutorView.tutor.senha}" required="true"
+                                    feedback="true" promptLabel="Digite sua senha"
+                                    weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte"
+                                    style="width: calc(100% - 90px);" />
+                    </div>
+
+                    <p:separator style="margin-bottom: 20px;" />
+
+                    <p:commandButton value="Cadastrar"
+                                     action="#{tutorView.salvar}"
+                                     icon="pi pi-user-plus"
+                                     update="messages"
+                                     styleClass="ui-button-success"
+                                     style="width: 100%; margin-bottom: 10px;" />
+
+                    <p:button value="Já tem conta? Faça login"
+                              outcome="/login.xhtml"
+                              icon="pi pi-sign-in"
+                              styleClass="ui-button-secondary"
+                              style="width: 100%;" />
+
+                </p:panel>
+            </h:form>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>
+
