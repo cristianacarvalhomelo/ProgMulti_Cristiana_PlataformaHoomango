@@ -1,55 +1,60 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout3/template2.xhtml">
 
-<h:head>
-    <title>Login - HoomanGo</title>
-</h:head>
+    <ui:define name="titulo">
+        Login - HoomanGo
+    </ui:define>
 
-<h:body style="background-color:#f2f2f2;">
+    <ui:define name="content">
 
-    <h:form>
+        <h:form>
 
-        <p:panel header="Bem-vindo ao HoomanGo!" style="max-width: 400px; margin: 100px auto; padding: 20px;">
+            <p:panel header="Bem-vindo ao HoomanGo!" style="max-width: 400px; margin: 5px auto; padding: 5px;">
 
-            <p:messages id="msgs" closable="true" globalOnly="true" />
+                <p:messages id="msgs" closable="true" globalOnly="true" />
 
-            <h:panelGrid columns="2" cellpadding="5" style="width:100%;">
+                <h:panelGrid columns="2" cellpadding="5" style="width:100%;">
 
-                <h:outputLabel for="email" value="E-mail:" />
-                <p:inputText id="email" value="#{loginPage.email}" required="true" label="E-mail" />
+                    <h:outputLabel for="email" value="E-mail:" />
+                    <p:inputText id="email" value="#{loginPage.email}" required="true" label="E-mail" />
 
-                <h:outputLabel for="senha" value="Senha:" />
-                <p:password id="senha" value="#{loginPage.senha}" feedback="false" required="true" label="Senha" />
+                    <h:outputLabel for="senha" value="Senha:" />
+                    <p:password id="senha" value="#{loginPage.senha}" feedback="false" required="true" label="Senha" />
 
-            </h:panelGrid>
+                </h:panelGrid>
 
-            <br/>
+                <br/>
 
-            <p:commandButton value="Entrar" action="#{loginPage.login}" icon="pi pi-sign-in" update="msgs"
-                             styleClass="ui-button-success" style="width:auto; margin: 0 auto; display:block;"/>
+                <p:commandButton value="Entrar" action="#{loginPage.login}" icon="pi pi-sign-in" update="msgs"
+                                 styleClass="ui-button-success" style="width:auto; margin: 0 auto; display:block;"/>
 
-            <br/><br/>
+                <br/><br/>
 
-            <p:link outcome="recuperarSenha.xhtml" value="Esqueceu sua senha?" style="display:block; text-align:center;"/>
+                <p:link outcome="recuperarSenha.xhtml" value="Esqueceu sua senha?" style="display:block; text-align:center;"/>
 
-            <br/><br/>
+                <br/>
+
+                <h:outputText value="Não tem uma conta? Faça o cadastro: " style="display:block; text-align:center; margin-top:20px; font-weight:bold;" />
+
+                <br/>
 
                 <h:form>
                     <p:button value="Cadastrar como Tutor" outcome="tutor/cadastroTutor.xhtml"
                               styleClass="ui-button ui-button-raised button-tutor" style="width: 100%;" />
 
-                <br/><br/>
+                    <br/><br/>
 
                     <p:button value="Cadastrar como Cuidador" outcome="cuidador/cadastroCuidador.xhtml"
                               styleClass="ui-button ui-button-raised button-cuidador" style="width: 100%;" />
                 </h:form>
 
-        </p:panel>
+            </p:panel>
 
-    </h:form>
+        </h:form>
 
-</h:body>
-</html>
+    </ui:define>
+
+</ui:composition>
