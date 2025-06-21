@@ -33,7 +33,11 @@
         <ui:insert name="headIncludes"/>
     </h:head>
 
-    <h:body styleClass="d-flex flex-column h-100">
+    <h:body style="background-image: url('#{request.contextPath}/resources/images/fundo-home.webp');
+               background-size: cover;
+               background-repeat: no-repeat;
+               background-attachment: fixed;
+               background-position: center;">
         <h:panelGroup layout="block" styleClass="header">
             <ui:include src="/WEB-INF/layout2/header.xhtml"/>
         </h:panelGroup>

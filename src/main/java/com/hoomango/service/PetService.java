@@ -34,6 +34,4 @@ public class PetService implements Serializable {
         query.setParameter("tutor", tutor);
         return query.getResultList();
     }
-
-
 }

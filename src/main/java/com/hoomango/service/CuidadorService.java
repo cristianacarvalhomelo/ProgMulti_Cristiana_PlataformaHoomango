@@ -67,5 +67,10 @@ public class CuidadorService implements Serializable {
                 .getSingleResult();
     }
 
-
+    public Cuidador buscarPorId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id to load is required for loading");
+        }
+        return em.find(Cuidador.class, id);
+    }
 }

@@ -15,6 +15,34 @@ public class PasswordResetTokenService {
     private EntityManager em;
 
     public void salvar(PasswordResetToken token) {
+        if (token.getTutor() != null) {
+            PasswordResetToken existente = em.createQuery(
+                            "SELECT p FROM PasswordResetToken p WHERE p.tutor = :tutor", PasswordResetToken.class)
+                    .setParameter("tutor", token.getTutor())
+                    .getResultStream()
+                    .findFirst()
+                    .orElse(null);
+
+            if (existente != null) {
+                em.remove(existente);
+                em.flush();
+            }
+        }
+
+        if (token.getCuidador() != null) {
+            PasswordResetToken existente = em.createQuery(
+                            "SELECT p FROM PasswordResetToken p WHERE p.cuidador = :cuidador", PasswordResetToken.class)
+                    .setParameter("cuidador", token.getCuidador())
+                    .getResultStream()
+                    .findFirst()
+                    .orElse(null);
+
+            if (existente != null) {
+                em.remove(existente);
+                em.flush();
+            }
+        }
+
         em.persist(token);
     }
 

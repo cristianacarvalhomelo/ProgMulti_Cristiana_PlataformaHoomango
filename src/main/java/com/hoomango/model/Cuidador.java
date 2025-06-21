@@ -1,7 +1,6 @@
 package com.hoomango.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -26,8 +25,9 @@ public class Cuidador {
 
     private String senha;
 
-    @Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]{2,50}\\s-\\s[A-Z]{2}$")
-    private String endereco;
+   private String cidade;
+
+   private String estado;
 
     private String telefone;
 
@@ -52,8 +52,11 @@ public class Cuidador {
     public List<Servico> getServicos() { return servicos; }
     public void setServicos(List<Servico> servicos) { this.servicos = servicos; }
 
-    public String getEndereco() { return endereco; }
-    public void setEndereco(String endereco) { this.endereco = endereco; }
+    public String getCidade() { return cidade; }
+    public void setCidade(String cidade) { this.cidade = cidade; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
     public String getServicosAsString() {
         if (servicos == null || servicos.isEmpty()) {

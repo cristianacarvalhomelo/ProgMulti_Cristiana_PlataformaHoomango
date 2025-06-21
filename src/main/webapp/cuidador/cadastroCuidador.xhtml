@@ -21,11 +21,12 @@
             <p:inputText id="email" value="#{cuidadorView.cuidador.email}" required="true"
                          placeholder="Digite seu e-mail" style="width: 100%;" />
 
-            <p:outputLabel for="endereco" value="Endereço:" style="margin-top: 10px;" />
-            <p:inputText id="endereco" value="#{cuidadorView.cuidador.endereco}" required="true"
-                         placeholder="Digite seu endereço" style="width: 100%;">
-                <f:validateRegex pattern="^[A-Za-zÀ-ÿ\s]{2,50}\s-\s[A-Z]{2}$"/>
-            </p:inputText>
+            <h:outputLabel for="cidade" value="Cidade:" />
+            <p:inputText id="cidade" value="#{cuidadorView.cuidador.cidade}" required="true" style="text-transform: capitalize"/>
+
+            <h:outputLabel for="estado" value="Estado:" />
+            <p:inputText id="estado" value="#{cuidadorView.cuidador.estado}" required="true" maxlength="2"
+                         style="text-transform: uppercase;" />
 
             <p:outputLabel for="senha" value="Senha:" style="margin-top: 10px;" />
             <p:password id="senha" value="#{cuidadorView.cuidador.senha}" required="true"

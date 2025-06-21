@@ -1,70 +1,98 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/template.xhtml">
+    <ui:define name="title">
+        Atualizar Perfil - Cuidador
+    </ui:define>
 
-<h:head>
-    <title>Atualizar Perfil - Cuidador</title>
-</h:head>
+    <ui:define name="content">
 
-<h:body>
+        <h:form enctype="multipart/form-data">
+            <p:panel header="Atualizar Perfil - Cuidador" style="max-width: 500px; margin: 0 auto;">
 
-    <h:form enctype="multipart/form-data">
-        <p:panel header="Atualizar Perfil - Cuidador" style="max-width: 500px; margin: 0 auto;">
+                <p:messages id="msgs" globalOnly="true" closable="true" />
 
-            <p:messages id="msgs" globalOnly="true" closable="true" />
+                <h:panelGrid columns="2" cellpadding="5" style="width:100%;">
 
-            <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="nome" value="Nome:" />
+                    <p:inputText id="nome" value="#{cuidadorView.cuidador.nome}" required="true" />
 
-                <h:outputLabel for="nome" value="Nome:" />
-                <p:inputText id="nome" value="#{cuidadorView.cuidador.nome}" required="true" />
+                    <h:outputLabel value="E-mail:" />
+                    <h:outputText value="#{cuidadorView.cuidador.email}" />
 
-                <h:outputLabel value="E-mail:" />
-                <h:outputText value="#{cuidadorView.cuidador.email}" />
+                    <h:outputLabel for="cidade" value="Cidade:" />
+                    <p:inputText id="cidade" value="#{cuidadorView.cuidador.cidade}" required="true" style="text-transform: capitalize"/>
 
-                <h:outputLabel value="Endereço:" />
-                <h:outputText value="#{cuidadorView.cuidador.endereco}" />
+                    <h:outputLabel for="estado" value="Estado:" />
+                    <p:inputText id="estado" value="#{cuidadorView.cuidador.estado}" required="true" maxlength="2"
+                                 style="text-transform: uppercase;" />
 
-                <h:outputLabel for="telefone" value="Telefone:" />
-                <p:inputMask id="telefone" value="#{cuidadorView.cuidador.telefone}" mask="(99) 99999-9999" />
+                    <h:outputLabel for="telefone" value="Telefone:" />
+                    <p:inputMask id="telefone" value="#{cuidadorView.cuidador.telefone}" mask="(99) 99999-9999" />
 
-            </h:panelGrid>
+                </h:panelGrid>
 
-            <p:separator />
+                <p:separator style="margin:20px 0" />
 
-            <p:commandButton value="Atualizar" action="#{cuidadorView.atualizarPerfil}" update="msgs"
-                             icon="pi pi-check" styleClass="p-button-success" />
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;">
 
-            <p:button value="Voltar"
-                      icon="pi pi-paw"
-                      style="margin-left: 260px"
-                      styleClass="p-button-rounded p-button-info"
-                      outcome="homeCuidador.xhtml"/>
+                    <p:commandButton value="Atualizar"
+                                     action="#{cuidadorView.atualizarPerfil}"
+                                     update="msgs"
+                                     icon="pi pi-check"
+                                     styleClass="ui-button-success"
+                                     style="flex: 1;" />
 
-            <p:separator />
+                    <p:commandButton value="Voltar"
+                                     icon="pi pi-arrow-left"
+                                     onclick="history.back();"
+                                     type="button"
+                                     styleClass="ui-button-rounded ui-button-info"
+                                     style="flex: 1;" />
 
-            <p:commandButton value="Excluir Conta"
-                             onclick="PF('confirmDialog').show();"
-                             styleClass="p-button-danger" />
+                </div>
 
-            <p:confirmDialog id="confirmDialog"
-                             header="Confirmação"
-                             severity="alert"
-                             widgetVar="confirmDialog">
-                <h:outputText value="Você tem certeza de que deseja excluir sua conta?" />
+                <p:separator style="margin:20px 0" />
 
-                <p:commandButton value="Sim"
-                                 action="#{loginPage.excluirConta}"
-                                 ajax="false"
-                                 process="@this"/>
+                <p:commandButton value="Excluir Conta"
+                                 onclick="PF('confirmDialog').show();"
+                                 styleClass="ui-button-danger"
+                                 style="width: 100%;" />
 
-                <p:commandButton value="Não"
-                                 onclick="PF('confirmDialog').hide();" type="button" />
-            </p:confirmDialog>
+                <p:confirmDialog id="confirmDialog"
+                                 header="Confirmação"
+                                 severity="alert"
+                                 widgetVar="confirmDialog">
 
-        </p:panel>
-    </h:form>
+                    <h:outputText value="Você tem certeza de que deseja excluir sua conta?"
+                                  style="text-align: center"/>
 
-</h:body>
-</html>
+                    <br/><br/>
+
+                    <div style="display: flex; justify-content: space-between; gap: 10px;">
+
+                        <p:commandButton value="Sim"
+                                         action="#{loginPage.excluirConta}"
+                                         ajax="false"
+                                         process="@this"
+                                         styleClass="ui-button-danger"
+                                         style="flex: 1;" />
+
+                        <p:commandButton value="Não"
+                                         onclick="PF('confirmDialog').hide();"
+                                         type="button"
+                                         styleClass="ui-button-secondary"
+                                         style="flex: 1;" />
+
+                    </div>
+
+                </p:confirmDialog>
+
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

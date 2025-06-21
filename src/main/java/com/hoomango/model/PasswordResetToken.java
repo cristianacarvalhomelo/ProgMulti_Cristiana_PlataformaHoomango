@@ -25,43 +25,18 @@ public class PasswordResetToken {
     private Cuidador cuidador;
 
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
 
-    public String getToken() {
-        return token;
-    }
+    public LocalDateTime getExpiration() { return expiration; }
+    public void setExpiration(LocalDateTime expiration) { this.expiration = expiration; }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    public Tutor getTutor() { return tutor; }
+    public void setTutor(Tutor tutor) { this.tutor = tutor; }
 
-    public LocalDateTime getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(LocalDateTime expiration) {
-        this.expiration = expiration;
-    }
-
-    public Tutor getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
-    }
-
-    public Cuidador getCuidador() {
-        return cuidador;
-    }
-
-    public void setCuidador(Cuidador cuidador) {
-        this.cuidador = cuidador;
-    }
+    public Cuidador getCuidador() { return cuidador; }
+    public void setCuidador(Cuidador cuidador) { this.cuidador = cuidador; }
 }

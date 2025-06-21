@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 @Stateless
 public class EmailService {
 
-    private static final String SENDGRID_API_KEY = "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";
+    private static final String SENDGRID_API_KEY = "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";
 
     public void enviarEmail(String destinatario, String assunto, String mensagem) {
         try {
@@ -31,7 +31,7 @@ public class EmailService {
                 }
               ],
               "from": {
-                "email": "cristianacarvalhomelo@gmail.com"
+                "email": "cristianammelo1999@gmail.com"
               },
               "content": [
                 {

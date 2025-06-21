@@ -25,12 +25,18 @@
 
                     <p:column headerText="Nome" sortBy="#{c.nome}"
                               filterMatchMode="contains" filterBy="#{c.nome}">
-                        <p:outputLabel value="#{c.nome}"/>
+                        <h:link outcome="perfilCuidador" value="#{c.nome}">
+                            <f:param name="id" value="#{c.id}" />
+                        </h:link>
                     </p:column>
 
-                    <p:column headerText="Endereço" sortBy="#{c.endereco}"
-                              filterMatchMode="contains" filterBy="#{c.endereco}">
-                        <p:outputLabel value="#{c.endereco}"/>
+                    <p:column headerText="Endereço" sortBy="#{c.cidade}, #{c.estado}"
+                              filterMatchMode="contains" filterBy="#{c.cidade}, #{c.estado}">
+                        <h:panelGroup>
+                            <h:outputText value="#{c.cidade}" style="text-transform: capitalize;" />
+                            <h:outputText value=", " />
+                            <h:outputText value="#{c.estado}" style="text-transform: uppercase;" />
+                        </h:panelGroup>
                     </p:column>
 
                     <p:column headerText="Serviços"
@@ -41,7 +47,6 @@
                             <p>#{servico.descricao} — R$ #{servico.preco}</p><br/>
                         </ui:repeat>
                     </p:column>
-
 
                     <p:column headerText="Telefone" sortBy="#{c.telefone}"
                               filterMatchMode="contains" filterBy="#{c.telefone}">

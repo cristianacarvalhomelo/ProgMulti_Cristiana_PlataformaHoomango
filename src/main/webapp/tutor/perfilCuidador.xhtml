@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout2/template.xhtml">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{cuidadorPerfilView.id}" />
+            <f:viewAction action="#{cuidadorPerfilView.init}" onPostBack="false" />
+    </f:metadata>
+    </ui:define>
+
+    <ui:define name="pageTitle">Perfil do Cuidador</ui:define>
+
+    <ui:define name="content">
+        <p:panel header="Perfil de #{cuidadorPerfilView.cuidador.nome}">
+            <h:panelGrid columns="10">
+                <h:outputText value="Nome:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.nome}"/>
+
+                <h:outputText value="Email:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.email}"/>
+
+                <h:outputText value="Telefone:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.telefone}"/>
+
+                <h:outputText value="Endereço:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.cidade}" style="text-transform: capitalize;" />
+                <h:outputText value=", " />
+                <h:outputText value="#{cuidadorPerfilView.cuidador.estado}" style="text-transform: uppercase;" />
+            </h:panelGrid>
+
+            <p:separator/>
+
+            <p:panel header="Agenda">
+                <p:schedule value="#{cuidadorPerfilView.eventModel}"
+                            widgetVar="agendaWidget"
+                            timeZone="America/Sao_Paulo"
+                            locale="pt"
+                            style="margin-bottom: 20px;"
+                            draggable="false"
+                            resizable="false"
+                            selectable="false"
+                            eventLimit="true"
+                            responsive="true">
+                </p:schedule>
+            </p:panel>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

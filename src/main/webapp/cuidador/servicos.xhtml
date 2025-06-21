@@ -1,107 +1,124 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/template.xhtml">
 
-<h:head>
-    <title>Serviços</title>
-    <style>
-        button.ui-button {
-            margin-right: .5rem;
-        }
-    </style>
-</h:head>
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewAction action="#{servicoView.init()}" />
+        </f:metadata>
+    </ui:define>
 
-<h:body>
+    <ui:define name="pageTitle">Serviços</ui:define>
 
-    <h:form id="formServico">
+    <ui:define name="content">
 
-        <p:panel header="Meus Serviços" style="max-width: 800px; margin: 0 auto;">
+        <p:panel id="panelServicos" header="Meus Serviços">
 
-            <p:commandButton value="Novo Serviço" icon="pi pi-plus" styleClass="p-button-success"
-                             onclick="PF('dialogServico').show();" type="button" />
+            <h:form id="formServico">
 
-            <p:dataTable value="#{servicoView.listaServicos}" var="servico" style="margin-top: 20px;"
-                         emptyMessage="Nenhum serviço cadastrado." responsiveLayout="scroll">
+                <p:commandButton value="Novo Serviço" icon="pi pi-plus"
+                                 oncomplete="PF('dlgServico').show()" update="formServicoDlg" />
 
-                <p:column headerText="Descrição">
-                    <h:outputText value="#{servico.descricao}" />
-                </p:column>
+                <p:dataTable id="tabelaServicos" var="s" value="#{servicoView.listaServicos}"
+                             emptyMessage="Nenhum serviço cadastrado."
+                             rowKey="#{s.id}" paginator="true" rows="5"
+                             rowsPerPageTemplate="5,10,15"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="Listando de {startRecord} até {endRecord} de {totalRecords}">
 
-                <p:column headerText="Preço">
-                    <h:outputText value="#{servico.preco}" />
-                </p:column>
+                    <p:column headerText="Descrição" sortBy="#{s.descricao}" filterBy="#{s.descricao}" filterMatchMode="contains">
+                        <h:outputText value="#{s.descricao}" />
+                    </p:column>
 
-                <p:column headerText="Ações" style="text-align: center; width: 180px;">
-                    <p:commandButton icon="pi pi-pencil" title="Editar"
-                                     actionListener="#{servicoView.prepararEdicao(servico)}"
-                                     oncomplete="PF('dialogServico').show();"
-                                     update=":formServico"
+                    <p:column headerText="Preço" sortBy="#{s.preco}">
+                        <h:outputText value="#{s.preco}">
+                            <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Ações" style="width:150px">
+                        <p:commandButton icon="pi pi-pencil" title="Editar"
+                                         actionListener="#{servicoView.prepararEdicao(s)}"
+                                         update=":formServicoDlg" oncomplete="PF('dlgServico').show()" />
+
+                        <p:commandButton icon="pi pi-trash" title="Excluir"
+                                         actionListener="#{servicoView.setServicoSelecionado(s)}"
+                                         oncomplete="PF('confirmDialog').show()"
+                                         update=":formServico:confirmDialog"
+                                         process="@this"
+                                         styleClass="ui-button-rounded ui-button-danger ui-button" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:confirmDialog id="confirmDialog"
+                                 header="Confirmação"
+                                 severity="alert"
+                                 widgetVar="confirmDialog">
+                    <h:outputText value="Você tem certeza de que deseja excluir este serviço?" />
+
+                    <br/><br/>
+
+                    <p:commandButton value="Sim"
+                                     actionListener="#{servicoView.excluir(servicoView.servicoSelecionado)}"
                                      process="@this"
-                                     styleClass="p-button-rounded p-button-info ui-button" />
+                                     update=":formServico :formServico:messages"
+                                     oncomplete="PF('confirmDialog').hide()"
+                                     styleClass="ui-button-rounded ui-button-danger" />
 
-                    <p:commandButton icon="pi pi-trash" title="Excluir"
-                                     actionListener="#{servicoView.setServicoSelecionado(servico)}"
-                                     oncomplete="PF('confirmDialog').show();"
-                                     update=":formServico:confirmDialog"
-                                     process="@this"
-                                     styleClass="p-button-rounded p-button-danger ui-button" />
-                </p:column>
+                    <p:commandButton value="Não"
+                                     onclick="PF('confirmDialog').hide();" type="button" />
+                </p:confirmDialog>
 
-            </p:dataTable>
+            </h:form>
 
-            <p:confirmDialog id="confirmDialog"
-                             header="Confirmação"
-                             severity="alert"
-                             widgetVar="confirmDialog">
-                <h:outputText value="Você tem certeza de que deseja excluir esse serviço?" />
+            <p:dialog header="Cadastro / Edição de Serviço" widgetVar="dlgServico" modal="true" resizable="false" closable="true"
+                      id="dialogServico" appendTo="@(body)">
+                <h:form id="formServicoDlg">
 
-                <br/><br/>
+                    <p:messages id="msgsServico" autoUpdate="true" closable="true" />
 
-                <p:commandButton value="Sim"
-                                 actionListener="#{servicoView.excluir(servicoView.servicoSelecionado)}"
-                                 process="@this"
-                                 update=":formServico :formServico:messages"
-                                 oncomplete="PF('confirmDialog').hide();"
-                                 styleClass="p-button-rounded p-button-danger" />
+                    <p:panelGrid columns="2" columnClasses="labelColumn,valueColumn"
+                                 style="margin-bottom:10px; width:100%;"
+                                 columnSpacing="10"
+                                 cellpadding="5"
+                                 responsiveLayout="scroll">
 
-                <p:commandButton value="Não"
-                                 onclick="PF('confirmDialog').hide();" type="button" />
-            </p:confirmDialog>
+                        <h:outputLabel for="descricao" value="Descrição:" style="font-weight:bold;" />
+                        <p:inputText id="descricao" value="#{servicoView.servico.descricao}"
+                                     required="true" requiredMessage="Descrição é obrigatória" maxlength="50"
+                                     style="width: 100%;" />
 
-            <p:button value="Voltar"
-                      icon="pi pi-paw"
-                      styleClass="p-button-rounded p-button-info"
-                      outcome="homeCuidador.xhtml"/>
+                        <h:outputLabel for="preco" value="Preço:" style="font-weight:bold;" />
+                        <p:inputNumber id="preco" value="#{servicoView.servico.preco}"
+                                       symbol="R$ " decimalSeparator="," thousandSeparator="."
+                                       inputStyle="width:100%;" />
+                    </p:panelGrid>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Salvar"
+                                         action="#{servicoView.salvarOuAtualizar}"
+                                         update=":formServico:tabelaServicos formServicoDlg msgsServico"
+                                         oncomplete="if (!args.validationFailed) PF('dlgServico').hide()"
+                                         process="@form"
+                                         styleClass="ui-button-success" />
+
+                        <p:commandButton value="Cancelar"
+                                         onclick="PF('dlgServico').hide(); return false;"
+                                         immediate="true"
+                                         styleClass="ui-button-secondary" />
+                    </f:facet>
+
+                </h:form>
+            </p:dialog>
+
+
 
         </p:panel>
 
-        <p:dialog header="Cadastro de Servico" widgetVar="dialogServico" modal="true" closable="true"
-                  resizable="false" id="dialogServico">
+    </ui:define>
 
-            <h:panelGrid columns="2" cellpadding="5">
-
-                <h:outputLabel value="Descrição:" />
-                <p:inputText value="#{servicoView.servico.descricao}" required="true" />
-
-                <h:outputLabel value="Preço:" />
-                <p:inputText value="#{servicoView.servico.preco}" />
-
-            </h:panelGrid>
-
-            <p:separator />
-
-            <p:commandButton value="Salvar"
-                             actionListener="#{servicoView.salvarOuAtualizar}"
-                             update=":formServico"
-                             process="@form"
-                             oncomplete="PF('dialogServico').hide();"
-                             icon="pi pi-check"
-                             styleClass="p-button-success" />
-        </p:dialog>
-
-    </h:form>
-
-</h:body>
-</html>
+</ui:composition>

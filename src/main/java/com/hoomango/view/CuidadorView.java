@@ -112,6 +112,10 @@ public class CuidadorView {
         return listaServicos;
     }
 
+    public String verPerfil(Long id) {
+        return "perfilCuidador.xhtml?faces-redirect=true&id=" + cuidador.getId();
+    }
+
     public void setListaServicos(List<Servico> listaServicos) {
         this.listaServicos = listaServicos;
     }

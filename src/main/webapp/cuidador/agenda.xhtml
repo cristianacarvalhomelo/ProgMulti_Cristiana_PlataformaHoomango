@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/template.xhtml">
+
+    <ui:define name="pageTitle">Agenda de Serviços</ui:define>
+
+    <ui:define name="content">
+        <h:form id="formAgenda">
+
+            <p:panel header="Agende os serviços do cuidador"
+                     style="max-width: 1200px; margin: 20px auto; text-align: center; border-radius: 12px;">
+
+                <p:schedule value="#{agendamentoView.eventModel}"
+                            widgetVar="agendaWidget"
+                            timeZone="America/Sao_Paulo"
+                            locale="pt"
+                            style="margin-bottom: 20px;"
+                            draggable="true"
+                            resizable="true"
+                            responsive="true">
+
+                    <p:ajax event="dateSelect"
+                            listener="#{agendamentoView.onDateSelect}"
+                            update="dialogAgendamento"
+                            oncomplete="PF('dialogAgendamento').show()" />
+                </p:schedule>
+
+                <p:commandButton value="Novo Agendamento"
+                                 icon="pi pi-plus"
+                                 actionListener="#{agendamentoView.prepararNovoAgendamento}"
+                                 update="dialogAgendamento"
+                                 oncomplete="PF('dialogAgendamento').show()"
+                                 styleClass="ui-button-success"/>
+
+            </p:panel>
+
+            <p:dialog id="dialogAgendamento"
+                      header="Novo Agendamento"
+                      widgetVar="dialogAgendamento"
+                      modal="true"
+                      closable="true"
+                      draggable="false"
+                      resizable="false"
+                      width="400"
+                      styleClass="customDialog">
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <h:outputLabel value="Título:"/>
+                    <p:inputText value="#{agendamentoView.titulo}"
+                                 required="true"
+                                 requiredMessage="O título é obrigatório."/>
+
+                    <h:outputLabel value="Início:"/>
+                    <p:calendar value="#{agendamentoView.dataInicio}"
+                                pattern="dd/MM/yyyy HH:mm"
+                                showTime="true"
+                                required="true"
+                                requiredMessage="A data de início é obrigatória."/>
+
+                    <h:outputLabel value="Término:"/>
+                    <p:calendar value="#{agendamentoView.dataFim}"
+                                pattern="dd/MM/yyyy HH:mm"
+                                showTime="true"
+                                required="true"
+                                requiredMessage="A data de término é obrigatória."/>
+
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Salvar"
+                                     actionListener="#{agendamentoView.adicionarAgendamento}"
+                                     update="formAgenda msgsAgendamento"
+                                     oncomplete="if (!args.validationFailed) PF('dialogAgendamento').hide()"
+                                     icon="pi pi-check"
+                                     styleClass="ui-button-success"/>
+                    <p:commandButton value="Cancelar"
+                                     onclick="PF('dialogAgendamento').hide()"
+                                     type="button"
+                                     icon="pi pi-times"
+                                     styleClass="ui-button-secondary"
+                                     immediate="true"/>
+                </f:facet>
+
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -22,7 +22,6 @@ public class LoginPage implements Serializable {
     private String email;
     private String senha;
     private boolean logado = false;
-
     private Tutor tutorLogado;
     private Cuidador cuidadorLogado;
 
@@ -81,21 +80,11 @@ public class LoginPage implements Serializable {
         this.logado = logado;
     }
 
-    public void setCuidadorLogado(Cuidador cuidadorLogado) {
-        this.cuidadorLogado = cuidadorLogado;
-    }
+    public Tutor getTutorLogado() { return tutorLogado; }
+    public void setTutorLogado(Tutor tutorLogado) { this.tutorLogado = tutorLogado; }
 
-    public void setTutorLogado(Tutor tutorLogado) {
-        this.tutorLogado = tutorLogado;
-    }
-
-    public Tutor getTutorLogado() {
-        return tutorLogado;
-    }
-
-    public Cuidador getCuidadorLogado() {
-        return cuidadorLogado;
-    }
+    public Cuidador getCuidadorLogado() { return cuidadorLogado; }
+    public void setCuidadorLogado(Cuidador cuidadorLogado) { this.cuidadorLogado = cuidadorLogado; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
