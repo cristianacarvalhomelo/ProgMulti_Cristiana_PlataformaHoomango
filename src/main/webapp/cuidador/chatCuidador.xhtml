@@ -19,7 +19,7 @@
                         <p:commandButton value="#{t.nome}"
                                          action="#{chatCuidadorView.selecionarTutor(t)}"
                                          update="@form"
-                                         style="width:100%; text-align:left; padding:10px;"
+                                         style="width:100%; text-align:left; padding:10px; text-transform: capitalize"
                                          icon="pi pi-user"/>
                     </ui:repeat>
                 </div>
@@ -30,7 +30,7 @@
                         <h:link outcome="perfilTutor.xhtml"
                                 value="#{chatCuidadorView.tutorSelecionado.nome}"
                                 rendered="#{not empty chatCuidadorView.tutorSelecionado}"
-                                style="color: #333; text-decoration: none; font-weight: bold;" >
+                                style="color: #333; text-decoration: none; font-weight: bold; text-transform: capitalize" >
                             <f:param name="id" value="#{chatCuidadorView.tutorSelecionado.id}" />
                         </h:link>
                     </div>
@@ -51,7 +51,7 @@
                         background-color:#{msg.enviadoPorTutor ? '#dcf8c6' : '#f0f0f0'};
                         max-width: 70%;
                         box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                        <strong>#{msg.enviadoPorTutor ? msg.tutor.nome : 'Você'}:</strong>
+                                        <strong style="text-transform: capitalize;">#{msg.enviadoPorTutor ? msg.tutor.nome : 'Você'}:</strong>
                                         <div>#{msg.texto}</div>
                                         <small style="color: #888;">#{msg.dataHora}</small>
                                     </div>
