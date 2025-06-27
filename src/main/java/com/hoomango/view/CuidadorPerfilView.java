@@ -46,7 +46,7 @@ public class CuidadorPerfilView implements Serializable {
         List<Agendamento> agendamentos = agendamentoService.listarPorCuidador(cuidador);
         for (Agendamento ag : agendamentos) {
             DefaultScheduleEvent<?> event = DefaultScheduleEvent.builder()
-                    .title(ag.getTitulo())
+                    .title("Indisponível")
                     .startDate(ag.getDataInicio())
                     .endDate(ag.getDataFim())
                     .build();

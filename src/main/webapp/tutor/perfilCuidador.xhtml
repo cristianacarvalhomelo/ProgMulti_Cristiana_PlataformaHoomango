@@ -9,51 +9,51 @@
         <f:metadata>
             <f:viewParam name="id" value="#{cuidadorPerfilView.id}" />
             <f:viewAction action="#{cuidadorPerfilView.init}" onPostBack="false" />
-    </f:metadata>
+        </f:metadata>
     </ui:define>
 
     <ui:define name="content">
         <p:panel header="Perfil de #{cuidadorPerfilView.cuidador.nome}">
-                <h:panelGrid columns="2" columnClasses="label,valor" style="width:100%; margin-bottom: 20px;" cellpadding="5">
+            <h:panelGrid columns="2" columnClasses="label,valor" style="width:100%; margin-bottom: 20px;" cellpadding="5">
 
-                    <h:outputText value="Nome:"/>
-                    <h:outputText value="#{cuidadorPerfilView.cuidador.nome}"/>
+                <h:outputText value="Nome:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.nome}"/>
 
-                    <h:outputText value="Email:"/>
-                    <h:outputText value="#{cuidadorPerfilView.cuidador.email}"/>
+                <h:outputText value="Email:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.email}"/>
 
-                    <h:outputText value="Telefone:"/>
-                    <h:outputText value="#{cuidadorPerfilView.cuidador.telefone}"/>
+                <h:outputText value="Telefone:"/>
+                <h:outputText value="#{cuidadorPerfilView.cuidador.telefone}"/>
 
-                    <h:outputText value="Endereço:"/>
-                    <h:outputText>
-                        #{cuidadorPerfilView.cuidador.cidade}, #{cuidadorPerfilView.cuidador.estado}
-                    </h:outputText>
+                <h:outputText value="Endereço:"/>
+                <h:outputText>
+                    #{cuidadorPerfilView.cuidador.cidade}, #{cuidadorPerfilView.cuidador.estado}
+                </h:outputText>
 
-                    <p:linkButton value="Abrir Chat"
-                                  outcome="chatTutor"
-                                  icon="pi pi-comments">
-                        <f:param name="cuidadorId" value="#{cuidadorPerfilView.cuidador.id}" />
-                    </p:linkButton>
+                <p:linkButton value="Abrir Chat"
+                              outcome="chatTutor"
+                              icon="pi pi-comments">
+                    <f:param name="cuidadorId" value="#{cuidadorPerfilView.cuidador.id}" />
+                </p:linkButton>
 
-                </h:panelGrid>
-            </p:panel>
+            </h:panelGrid>
+        </p:panel>
 
-            <p:separator/>
+        <p:separator/>
 
-            <p:panel header="Agenda">
-                <p:schedule value="#{cuidadorPerfilView.eventModel}"
-                            widgetVar="agendaWidget"
-                            timeZone="America/Sao_Paulo"
-                            locale="pt"
-                            style="margin-bottom: 20px;"
-                            draggable="false"
-                            resizable="false"
-                            selectable="false"
-                            eventLimit="true"
-                            responsive="true">
-                </p:schedule>
-            </p:panel>
-        </ui:define>
+        <p:panel header="Agenda">
+            <p:schedule value="#{cuidadorPerfilView.eventModel}"
+                        widgetVar="agendaWidget"
+                        timeZone="America/Sao_Paulo"
+                        locale="pt"
+                        style="margin-bottom: 20px;"
+                        draggable="false"
+                        resizable="false"
+                        selectable="false"
+                        eventLimit="true"
+                        responsive="true">
+            </p:schedule>
+        </p:panel>
+    </ui:define>
 
 </ui:composition>
