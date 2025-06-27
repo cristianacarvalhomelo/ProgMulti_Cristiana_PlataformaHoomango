@@ -15,47 +15,44 @@
     <ui:define name="content">
         <p:panel id="consulta">
             <h:form id="formConsulta">
-                <p:dataTable var="c" value="#{cuidadorView.listaCuidadores}"
+                <p:dataTable var="c" value="#{cuidadorView.listaCuidadores}" widgetVar="tabelaCuidadores"
                              emptyMessage="Nenhum cuidador encontrado"
-                             rowKey="#{c.id}" rows="5" paginator="true"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15"
-                             paginatorPosition="bottom"
-                             currentPageReportTemplate="Listando de {startRecord} até {endRecord} de {totalRecords}">
+                             filteredValue="#{cuidadorView.listaCuidadoresFiltrados}"
+                             globalFilterFunction="#{cuidadorView.globalFilterFunction}"
+                             filterMatchMode="custom">
 
-                    <p:column headerText="Nome" sortBy="#{c.nome}"
-                              filterMatchMode="contains" filterBy="#{c.nome}">
+                    <f:facet name="header">
+                        <div class="flex justify-content-end">
+                            <p:inputText id="globalFilter"
+                                         onkeyup="PF('tabelaCuidadores').filter()"
+                                         style="width:300px"
+                                         placeholder="Buscar cuidadores" />
+
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Nome" filterable="false">
                         <h:link outcome="perfilCuidador" value="#{c.nome}">
                             <f:param name="id" value="#{c.id}" />
                         </h:link>
                     </p:column>
 
-                    <p:column headerText="Endereço" sortBy="#{c.cidade}, #{c.estado}"
-                              filterMatchMode="contains" filterBy="#{c.cidade}, #{c.estado}">
-                        <h:panelGroup>
-                            <h:outputText value="#{c.cidade}" style="text-transform: capitalize;" />
-                            <h:outputText value=", " />
-                            <h:outputText value="#{c.estado}" style="text-transform: uppercase;" />
-                        </h:panelGroup>
+                    <p:column headerText="Endereço" filterable="false">
+                        <h:outputText value="#{c.cidade}, #{c.estado}" />
                     </p:column>
 
-                    <p:column headerText="Serviços"
-                              sortBy="#{c.servicosDescricao}"
-                              filterBy="#{c.servicosDescricao}"
-                              filterMatchMode="contains">
+                    <p:column headerText="Serviços" filterable="false">
                         <ui:repeat value="#{c.servicos}" var="servico">
-                            <p>#{servico.descricao} — R$ #{servico.preco}</p><br/>
+                            <p>#{servico.descricao} — R$ #{servico.preco}</p><br />
                         </ui:repeat>
                     </p:column>
 
-                    <p:column headerText="Telefone" sortBy="#{c.telefone}"
-                              filterMatchMode="contains" filterBy="#{c.telefone}">
-                        <p:outputLabel value="#{c.telefone}"/>
+                    <p:column headerText="Telefone" filterable="false">
+                        <p:outputLabel value="#{c.telefone}" />
                     </p:column>
-
                 </p:dataTable>
             </h:form>
+
         </p:panel>
     </ui:define>
 </ui:composition>

@@ -40,7 +40,6 @@ public class ServicoView implements Serializable {
         listaServicos = servicoService.listar();
     }
 
-    @Transactional
     public void salvarOuAtualizar() {
         try {
             Cuidador cuidadorLogado = loginPage.getCuidadorLogado();
@@ -62,12 +61,17 @@ public class ServicoView implements Serializable {
         }
     }
 
-    public void excluir(Servico servicoSelecionado) {
+    public void excluir() {
+        System.out.println("Chamou método excluir");
         try {
-            servicoService.excluir(servicoSelecionado);
-            listarServicos();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Serviço excluído com sucesso!", null));
+            if (servicoSelecionado != null) {
+                servicoService.excluir(servicoSelecionado);
+                Cuidador cuidadorLogado = loginPage.getCuidadorLogado();
+                listaServicos = servicoService.listarPorCuidador(cuidadorLogado);
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Serviço excluído com sucesso!", null));
+                servicoSelecionado = null;
+            } else { System.out.println("servicoSelecionado está null!");}
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir serviço.", null));
@@ -86,6 +90,7 @@ public class ServicoView implements Serializable {
 
     public Servico getServicoSelecionado() { return servicoSelecionado; }
     public void setServicoSelecionado(Servico servicoSelecionado) {
+        System.out.println("Servico selecionado para exclusão: " + servicoSelecionado.getDescricao());
         this.servicoSelecionado = servicoSelecionado;
     }
 }

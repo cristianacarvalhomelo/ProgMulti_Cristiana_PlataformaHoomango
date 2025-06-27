@@ -64,16 +64,15 @@
                     <br/><br/>
 
                     <p:commandButton value="Sim"
-                                     actionListener="#{servicoView.excluir(servicoView.servicoSelecionado)}"
+                                     action="#{servicoView.excluir}"
                                      process="@this"
-                                     update=":formServico :formServico:messages"
-                                     oncomplete="PF('confirmDialog').hide()"
+                                     update=":formServico"
+                                     oncomplete="PF('confirmDialog').hide();"
                                      styleClass="ui-button-rounded ui-button-danger" />
 
                     <p:commandButton value="Não"
                                      onclick="PF('confirmDialog').hide();" type="button" />
                 </p:confirmDialog>
-
             </h:form>
 
             <p:dialog header="Cadastro / Edição de Serviço" widgetVar="dlgServico" modal="true" resizable="false" closable="true"
@@ -97,9 +96,8 @@
                         <p:inputNumber id="preco" value="#{servicoView.servico.preco}"
                                        symbol="R$ " decimalSeparator="," thousandSeparator="."
                                        inputStyle="width:100%;" />
-                    </p:panelGrid>
 
-                    <f:facet name="footer">
+                    </p:panelGrid>
                         <p:commandButton value="Salvar"
                                          action="#{servicoView.salvarOuAtualizar}"
                                          update=":formServico:tabelaServicos formServicoDlg msgsServico"
@@ -111,12 +109,9 @@
                                          onclick="PF('dlgServico').hide(); return false;"
                                          immediate="true"
                                          styleClass="ui-button-secondary" />
-                    </f:facet>
 
                 </h:form>
             </p:dialog>
-
-
 
         </p:panel>
 

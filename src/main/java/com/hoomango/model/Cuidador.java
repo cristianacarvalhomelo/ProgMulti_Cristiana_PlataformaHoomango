@@ -31,7 +31,7 @@ public class Cuidador {
 
     private String telefone;
 
-    @OneToMany(mappedBy = "cuidador", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cuidador", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Servico> servicos = new ArrayList<>();
 
     public Long getId() { return id; }

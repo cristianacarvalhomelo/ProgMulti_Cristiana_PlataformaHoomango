@@ -21,8 +21,18 @@ public class ServicoService implements Serializable {
 
     public List<Servico> listar() { return em.createQuery("SELECT c FROM Servico c", Servico.class).getResultList(); }
 
-    public void excluir(Servico servico) { Servico servicoGerenciado = em.merge(servico); em.remove(servicoGerenciado); }
-    
+    public void excluir(Servico servico) {
+        Servico servicoGerenciado = em.merge(servico);
+
+        Cuidador cuidador = servicoGerenciado.getCuidador();
+        if (cuidador != null) {
+            cuidador.getServicos().remove(servicoGerenciado);
+        }
+
+        em.remove(servicoGerenciado);
+    }
+
+
     public void atualizar(Servico servico) { em.merge(servico); }
 
     public List<Servico> listarPorCuidador(Cuidador cuidador) {

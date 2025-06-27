@@ -14,8 +14,12 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.primefaces.util.LangUtils;
 
 import java.util.List;
+import java.util.Locale;
+
+import static java.lang.Integer.getInteger;
 
 @Named("cuidadorView")
 @RequestScoped
@@ -26,6 +30,7 @@ public class CuidadorView {
     private List<Servico> listaServicos;
     private Cuidador cuidadorComServicos;
     private String confirmarSenha;
+    private List<Cuidador> listaCuidadoresFiltrados;
 
     @Inject
     private CuidadorService cuidadorService;
@@ -54,6 +59,7 @@ public class CuidadorView {
             }
 
             listaCuidadores = cuidadorService.listar();
+            listaCuidadoresFiltrados = cuidadorService.listar();
             listaServicos = servicoService.listar();
 
         } catch (Exception e) {
@@ -106,6 +112,21 @@ public class CuidadorView {
         }
     }
 
+    public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+        if (LangUtils.isBlank(filterText)) {
+            return true;
+        }
+
+        Cuidador c = (Cuidador) value;
+        return (c.getNome() != null && c.getNome().toLowerCase().contains(filterText))
+                || (c.getCidade() != null && c.getCidade().toLowerCase().contains(filterText))
+                || (c.getEstado() != null && c.getEstado().toLowerCase().contains(filterText))
+                || (c.getTelefone() != null && c.getTelefone().toLowerCase().contains(filterText))
+                || c.getServicos().stream()
+                .anyMatch(s -> (s.getDescricao() + " " + s.getPreco()).toLowerCase().contains(filterText));
+    }
+
     public List<Tutor> getTutoresComQuemConversou() {
         return chatService.listarTutoresPorCuidador(loginPage.getCuidadorLogado());
     }
@@ -149,5 +170,13 @@ public class CuidadorView {
     public String getConfirmarSenha() { return confirmarSenha; }
 
     public void setConfirmarSenha(String confirmarSenha) { this.confirmarSenha = confirmarSenha; }
+
+    public List<Cuidador> getListaCuidadoresFiltrados() {
+        return listaCuidadoresFiltrados;
+    }
+
+    public void setListaCuidadoresFiltrados(List<Cuidador> listaCuidadoresFiltrados) {
+        this.listaCuidadoresFiltrados = listaCuidadoresFiltrados;
+    }
 
 }
