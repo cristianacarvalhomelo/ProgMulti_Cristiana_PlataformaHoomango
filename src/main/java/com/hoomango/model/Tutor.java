@@ -25,7 +25,6 @@ public class Tutor {
         return 31;
     }
 
-
     @Size(min = 1, max = 30)
     private String nome;
 

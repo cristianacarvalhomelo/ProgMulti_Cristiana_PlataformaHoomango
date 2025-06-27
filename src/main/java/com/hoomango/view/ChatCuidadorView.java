@@ -82,55 +82,19 @@ public class ChatCuidadorView implements Serializable {
         }
     }
 
+    public List<Tutor> getTutores() { return tutores; }
+    public void setTutores(List<Tutor> tutores) { this.tutores = tutores; }
 
+    public List<Mensagem> getMensagens() { return mensagens; }
+    public void setMensagens(List<Mensagem> mensagens) { this.mensagens = mensagens; }
 
-    public List<Tutor> getTutores() {
-        return tutores;
-    }
+    public String getNovaMensagem() { return novaMensagem; }
+    public void setNovaMensagem(String novaMensagem) { this.novaMensagem = novaMensagem; }
 
-    public void setTutores(List<Tutor> tutores) {
-        this.tutores = tutores;
-    }
+    public Tutor getTutorSelecionado() { return tutorSelecionado; }
 
-    public String getParticipanteAtual() {
-        return participanteAtual;
-    }
+    public void setTutorSelecionado(Tutor tutorSelecionado) { this.tutorSelecionado = tutorSelecionado; }
 
-    public void setParticipanteAtual(String participanteAtual) {
-        this.participanteAtual = participanteAtual;
-    }
-
-
-    public List<Mensagem> getMensagens() {
-        return mensagens;
-    }
-
-    public void setMensagens(List<Mensagem> mensagens) {
-        this.mensagens = mensagens;
-    }
-
-    public String getNovaMensagem() {
-        return novaMensagem;
-    }
-
-    public void setNovaMensagem(String novaMensagem) {
-        this.novaMensagem = novaMensagem;
-    }
-
-    public Tutor getTutorSelecionado() {
-        return tutorSelecionado;
-    }
-
-    public void setTutorSelecionado(Tutor tutorSelecionado) {
-        this.tutorSelecionado = tutorSelecionado;
-    }
-
-    public int getLastMessageId() {
-        return lastMessageId;
-    }
-
-    public void setLastMessageId(int lastMessageId) {
-        this.lastMessageId = lastMessageId;
-    }
-
+    public String getParticipanteAtual() { return participanteAtual; }
+    public void setParticipanteAtual(String participanteAtual) { this.participanteAtual = participanteAtual; }
 }

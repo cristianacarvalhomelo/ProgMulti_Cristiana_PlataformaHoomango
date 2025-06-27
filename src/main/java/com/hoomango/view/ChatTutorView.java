@@ -98,63 +98,24 @@ public class ChatTutorView implements Serializable {
         }
     }
 
+    public List<Cuidador> getCuidadores() { return cuidadores; }
+    public void setCuidadores(List<Cuidador> cuidadores) { this.cuidadores = cuidadores; }
 
-    public List<Cuidador> getCuidadores() {
-        return cuidadores;
-    }
+    public List<Mensagem> getMensagens() { return mensagens; }
+    public void setMensagens(List<Mensagem> mensagens) { this.mensagens = mensagens; }
 
-    public void setCuidadores(List<Cuidador> cuidadores) {
-        this.cuidadores = cuidadores;
-    }
+    public String getNovaMensagem() { return novaMensagem; }
+    public void setNovaMensagem(String novaMensagem) { this.novaMensagem = novaMensagem; }
 
-    public List<Mensagem> getMensagens() {
-        return mensagens;
-    }
+    public Cuidador getCuidadorSelecionado() { return cuidadorSelecionado; }
+    public void setCuidadorSelecionado(Cuidador cuidadorSelecionado) { this.cuidadorSelecionado = cuidadorSelecionado; }
 
-    public void setMensagens(List<Mensagem> mensagens) {
-        this.mensagens = mensagens;
-    }
+    public String getParticipanteAtual() { return participanteAtual; }
+    public void setParticipanteAtual(String participanteAtual) { this.participanteAtual = participanteAtual; }
 
-    public String getNovaMensagem() {
-        return novaMensagem;
-    }
+    public Long getCuidadorId() { return cuidadorId; }
+    public void setCuidadorId(Long cuidadorId) { this.cuidadorId = cuidadorId; }
 
-    public void setNovaMensagem(String novaMensagem) {
-        this.novaMensagem = novaMensagem;
-    }
-
-    public Cuidador getCuidadorSelecionado() {
-        return cuidadorSelecionado;
-    }
-
-    public void setCuidadorSelecionado(Cuidador cuidadorSelecionado) {
-        this.cuidadorSelecionado = cuidadorSelecionado;
-    }
-
-    public String getParticipanteAtual() {
-        return participanteAtual;
-    }
-
-    public void setParticipanteAtual(String participanteAtual) {
-        this.participanteAtual = participanteAtual;
-    }
-
-
-    public Long getCuidadorId() {
-        return cuidadorId;
-    }
-
-    public void setCuidadorId(Long cuidadorId) {
-        this.cuidadorId = cuidadorId;
-    }
-
-    public Tutor getTutorSelecionado() {
-        return tutorSelecionado;
-    }
-
-    public void setTutorSelecionado(Tutor tutorSelecionado) {
-        this.tutorSelecionado = tutorSelecionado;
-    }
-
+    public void setTutorSelecionado(Tutor tutorSelecionado) { this.tutorSelecionado = tutorSelecionado; }
 }
 

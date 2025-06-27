@@ -68,7 +68,6 @@ public class TutorView {
         }
     }
 
-
     public String atualizarPerfil() {
         try {
             tutorService.atualizar(tutor);
@@ -86,11 +85,9 @@ public class TutorView {
     }
 
     public Tutor getTutor() { return tutor; }
-
     public void setTutor(Tutor tutor) { this.tutor = tutor; }
 
     public String getConfirmarSenha() { return confirmarSenha; }
-
     public void setConfirmarSenha(String confirmarSenha) { this.confirmarSenha = confirmarSenha; }
 
 }

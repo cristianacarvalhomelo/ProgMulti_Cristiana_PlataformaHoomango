@@ -3,7 +3,6 @@ package com.hoomango;
 import com.hoomango.model.Cuidador;
 import com.hoomango.model.Tutor;
 import com.hoomango.service.CuidadorService;
-import com.hoomango.service.EmailService;
 import com.hoomango.service.TutorService;
 import com.hoomango.util.SessionUtil;
 import jakarta.enterprise.context.SessionScoped;
@@ -13,7 +12,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Named("loginPage")
 @SessionScoped

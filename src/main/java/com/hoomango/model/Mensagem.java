@@ -23,53 +23,23 @@ public class Mensagem implements Serializable {
 
     private boolean enviadoPorTutor;
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getTexto() { return texto; }
+    public void setTexto(String texto) { this.texto = texto; }
 
-    public String getTexto() {
-        return texto;
-    }
+    public LocalDateTime getDataHora() { return dataHora; }
+    public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
+    public Tutor getTutor() { return tutor; }
+    public void setTutor(Tutor tutor) { this.tutor = tutor; }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
-    }
+    public Cuidador getCuidador() { return cuidador; }
+    public void setCuidador(Cuidador cuidador) { this.cuidador = cuidador; }
 
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-
-    public Tutor getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
-    }
-
-    public Cuidador getCuidador() {
-        return cuidador;
-    }
-
-    public void setCuidador(Cuidador cuidador) {
-        this.cuidador = cuidador;
-    }
-
-    public boolean isEnviadoPorTutor() {
-        return enviadoPorTutor;
-    }
-
-    public void setEnviadoPorTutor(boolean enviadoPorTutor) {
-        this.enviadoPorTutor = enviadoPorTutor;
-    }
+    public boolean isEnviadoPorTutor() { return enviadoPorTutor; }
+    public void setEnviadoPorTutor(boolean enviadoPorTutor) { this.enviadoPorTutor = enviadoPorTutor; }
 
 }
 

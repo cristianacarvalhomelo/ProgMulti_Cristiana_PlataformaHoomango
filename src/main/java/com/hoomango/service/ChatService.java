@@ -15,9 +15,7 @@ public class ChatService {
     @PersistenceContext
     private EntityManager em;
 
-    public void enviar(Mensagem msg) {
-        em.persist(msg);
-    }
+    public void enviar(Mensagem msg) { em.persist(msg); }
 
     public List<Mensagem> buscarMensagens(Cuidador cuidador, Tutor tutor) {
         return em.createQuery(
@@ -52,5 +50,4 @@ public class ChatService {
                 .setParameter("tutor", tutor)
                 .getResultList();
     }
-
 }

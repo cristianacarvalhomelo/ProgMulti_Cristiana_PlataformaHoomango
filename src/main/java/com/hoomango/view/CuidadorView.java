@@ -19,8 +19,6 @@ import org.primefaces.util.LangUtils;
 import java.util.List;
 import java.util.Locale;
 
-import static java.lang.Integer.getInteger;
-
 @Named("cuidadorView")
 @RequestScoped
 public class CuidadorView {
@@ -100,7 +98,6 @@ public class CuidadorView {
         }
     }
 
-
     public void atualizarPerfil() {
         try {
             cuidadorService.atualizar(cuidador);
@@ -134,7 +131,6 @@ public class CuidadorView {
     public Cuidador getCuidador() {
         return cuidador;
     }
-
     public void setCuidador(Cuidador cuidador) {
         this.cuidador = cuidador;
     }
@@ -142,7 +138,6 @@ public class CuidadorView {
     public List<Cuidador> getListaCuidadores() {
         return listaCuidadores;
     }
-
     public void setListaCuidadores(List<Cuidador> listaCuidadores) {
         this.listaCuidadores = listaCuidadores;
     }
@@ -150,31 +145,27 @@ public class CuidadorView {
     public List<Servico> getListaServicos() {
         return listaServicos;
     }
+    public void setListaServicos(List<Servico> listaServicos) {
+        this.listaServicos = listaServicos;
+    }
 
     public String verPerfil(Long id) {
         return "perfilCuidador.xhtml?faces-redirect=true&id=" + cuidador.getId();
     }
 
-    public void setListaServicos(List<Servico> listaServicos) {
-        this.listaServicos = listaServicos;
-    }
-
     public Cuidador getCuidadorComServicos() {
         return cuidadorComServicos;
     }
-
     public void setCuidadorComServicos(Cuidador cuidadorComServicos) {
         this.cuidadorComServicos = cuidadorComServicos;
     }
 
     public String getConfirmarSenha() { return confirmarSenha; }
-
     public void setConfirmarSenha(String confirmarSenha) { this.confirmarSenha = confirmarSenha; }
 
     public List<Cuidador> getListaCuidadoresFiltrados() {
         return listaCuidadoresFiltrados;
     }
-
     public void setListaCuidadoresFiltrados(List<Cuidador> listaCuidadoresFiltrados) {
         this.listaCuidadoresFiltrados = listaCuidadoresFiltrados;
     }

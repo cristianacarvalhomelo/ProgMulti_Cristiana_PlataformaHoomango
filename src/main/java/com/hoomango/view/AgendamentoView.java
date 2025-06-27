@@ -31,7 +31,7 @@ public class AgendamentoView implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Tutor> tutoresDisponiveis;
-    private Long tutorIdSelecionadoStr;  // <-- objeto inteiro aqui
+    private Long tutorIdSelecionadoStr;
     private Cuidador cuidador;
     private DefaultScheduleModel eventModel;
     private String titulo;
@@ -39,7 +39,6 @@ public class AgendamentoView implements Serializable {
     private LocalDateTime dataFim;
     private Date dataMinima;
     private Agendamento agendamentoSelecionado;
-
 
     @Inject
     private TutorService tutorService;
@@ -55,25 +54,20 @@ public class AgendamentoView implements Serializable {
 
     @PostConstruct
     public void init() {
-        System.out.println(">>> INIT do AgendamentoView");
         eventModel = new DefaultScheduleModel();
         cuidador = loginPage.getCuidadorLogado();
-        System.out.println("Cuidador logado: " + (cuidador != null ? cuidador.getNome() : "null"));
         carregarEventos();
         dataMinima = new Date();
         tutoresDisponiveis = chatService.listarTutoresPorCuidador(cuidador);
-        System.out.println("Tutores disponíveis: " + tutoresDisponiveis.size());
         for (Tutor t : tutoresDisponiveis) {
             System.out.println("Tutor: " + t.getNome() + " - ID: " + t.getId());
         }
-
     }
 
     public void carregarEventos() {
         eventModel.clear();
         if (cuidador != null) {
             List<Agendamento> agendamentos = agendamentoService.listarPorCuidador(cuidador);
-            System.out.println("Agendamentos encontrados: " + agendamentos.size());
             for (Agendamento ag : agendamentos) {
                 DefaultScheduleEvent<Agendamento> event = DefaultScheduleEvent.<Agendamento>builder()
                         .title(ag.getTitulo())
@@ -92,7 +86,6 @@ public class AgendamentoView implements Serializable {
         this.dataFim = event.getObject();
         this.titulo = "";
         this.tutorIdSelecionadoStr = null;
-        System.out.println("Data selecionada: " + dataInicio);
     }
 
     public void onEventSelect(SelectEvent<DefaultScheduleEvent<Agendamento>> event) {
@@ -104,11 +97,9 @@ public class AgendamentoView implements Serializable {
         this.dataFim = LocalDateTime.now();
         this.titulo = "";
         this.tutorIdSelecionadoStr = null;
-        System.out.println("Preparando novo agendamento...");
     }
 
     public void adicionarAgendamento() {
-        System.out.println("Salvando agendamento...");
         if (cuidador == null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Usuário logado não encontrado."));
@@ -151,31 +142,20 @@ public class AgendamentoView implements Serializable {
     public void cancelarAgendamento() {
         if (agendamentoSelecionado != null) {
             agendamentoService.excluir(agendamentoSelecionado.getId());
-            carregarEventos(); // recarrega a agenda
+            carregarEventos();
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento cancelado com sucesso!", null));
         }
     }
 
-    public List<Tutor> getTutoresDisponiveis() {
-        System.out.println(">>> getTutoresDisponiveis chamado, quantidade: " + (tutoresDisponiveis != null ? tutoresDisponiveis.size() : "null"));
-        return tutoresDisponiveis;
-    }
+    public List<Tutor> getTutoresDisponiveis() { return tutoresDisponiveis; }
 
     public Long getTutorIdSelecionadoStr() {
-        System.out.println(">>> getTutorIdSelecionadoStr chamado: " + tutorIdSelecionadoStr);
-        return tutorIdSelecionadoStr;
-    }
-
+        return tutorIdSelecionadoStr; }
     public void setTutorIdSelecionadoStr(Long tutorIdSelecionadoStr) {
-        System.out.println(">>> setTutorIdSelecionadoStr chamado: " + tutorIdSelecionadoStr);
-        this.tutorIdSelecionadoStr = tutorIdSelecionadoStr;
-    }
+        this.tutorIdSelecionadoStr = tutorIdSelecionadoStr; }
 
-
-    public DefaultScheduleModel getEventModel() {
-        return eventModel;
-    }
+    public DefaultScheduleModel getEventModel() { return eventModel; }
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -190,12 +170,8 @@ public class AgendamentoView implements Serializable {
     public void setDataMinima(Date dataMinima) { this.dataMinima = dataMinima; }
 
     public Agendamento getAgendamentoSelecionado() {
-        return agendamentoSelecionado;
-    }
-
+        return agendamentoSelecionado; }
     public void setAgendamentoSelecionado(Agendamento agendamentoSelecionado) {
-        this.agendamentoSelecionado = agendamentoSelecionado;
-    }
-
+        this.agendamentoSelecionado = agendamentoSelecionado; }
 
 }

@@ -23,10 +23,6 @@ public class TutorService implements Serializable {
 
     public void atualizar(Tutor tutor) { em.merge(tutor); }
 
-    public List<Tutor> listar() {
-        return em.createQuery("SELECT t FROM Tutor t", Tutor.class).getResultList();
-    }
-
     public void excluir(Tutor tutor) { Tutor tutorGerenciado = em.merge(tutor); em.remove(tutorGerenciado); }
 
     public Tutor buscarPorEmail(String email) {

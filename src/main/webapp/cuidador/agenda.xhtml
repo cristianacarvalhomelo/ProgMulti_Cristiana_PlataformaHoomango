@@ -1,4 +1,3 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="jakarta.faces.facelets"
                 xmlns:f="jakarta.faces.core"
@@ -13,12 +12,12 @@
             }
         </h:outputStylesheet>
 
-        <h:form id="formAgenda">
+        <p:panel header="Agende os serviços do cuidador"
+                 style="max-width: 1200px; margin: 20px auto; text-align: center; border-radius: 12px;">
 
-            <p:messages id="msgsAgendamento" showDetail="true" autoUpdate="true"/>
+            <h:form id="formAgenda">
 
-            <p:panel header="Agende os serviços do cuidador"
-                     style="max-width: 1200px; margin: 20px auto; text-align: center; border-radius: 12px;">
+                <p:messages id="msgsAgendamento" showDetail="true" autoUpdate="true" closable="true"/>
 
                 <p:schedule value="#{agendamentoView.eventModel}"
                             widgetVar="agendaWidget"
@@ -38,7 +37,6 @@
                             listener="#{agendamentoView.onEventSelect}"
                             update="dialogVisualizarAgendamento"
                             oncomplete="PF('dialogVisualizarAgendamento').show()" />
-
                 </p:schedule>
 
                 <p:commandButton value="Novo Agendamento"
@@ -48,84 +46,90 @@
                                  oncomplete="PF('dialogAgendamento').show()"
                                  styleClass="ui-button-success"/>
 
-            </p:panel>
+            </h:form>
+        </p:panel>
 
-            <p:dialog id="dialogAgendamento"
-                      header="Novo Agendamento"
-                      widgetVar="dialogAgendamento"
-                      modal="true"
-                      closable="true"
-                      draggable="false"
-                      resizable="false"
-                      width="400"
-                      styleClass="customDialog">
+        <p:dialog id="dialogAgendamento"
+                  header="Novo Agendamento"
+                  widgetVar="dialogAgendamento"
+                  modal="true"
+                  closable="true"
+                  draggable="false"
+                  resizable="false"
+                  width="400"
+                  styleClass="customDialog"
+                  appendTo="@(body)">
 
-                <h:panelGrid columns="2" cellpadding="5" >
+            <h:form id="formDialogAgendamento">
 
-                    <h:outputLabel value="Título:"/>
-                    <p:inputText value="#{agendamentoView.titulo}"
+                <p:messages id="msgsDialogAgendamento" autoUpdate="true" closable="true" />
+
+                <p:panelGrid columns="2" cellpadding="5" columnClasses="labelColumn,valueColumn"
+                             style="margin-bottom:10px; width:100%;" columnSpacing="10">
+
+                    <h:outputLabel for="titulo" value="Título:" />
+                    <p:inputText id="titulo" value="#{agendamentoView.titulo}"
                                  required="true"
-                                 requiredMessage="O título é obrigatório."/>
+                                 requiredMessage="O título é obrigatório." />
 
-                    <h:outputLabel value="Início:"/>
-                    <p:datePicker value="#{agendamentoView.dataInicio}"
+                    <h:outputLabel for="dataInicio" value="Início:" />
+                    <p:datePicker id="dataInicio" value="#{agendamentoView.dataInicio}"
                                   pattern="dd/MM/yyyy HH:mm"
                                   showTime="true"
                                   required="true"
                                   timeInput="true"
                                   requiredMessage="A data de início é obrigatória."
-                                  mindate="#{agendamentoView.dataMinima}"/>
+                                  mindate="#{agendamentoView.dataMinima}" />
 
-                    <h:outputLabel value="Término:"/>
-                    <p:datePicker value="#{agendamentoView.dataFim}"
+                    <h:outputLabel for="dataFim" value="Término:" />
+                    <p:datePicker id="dataFim" value="#{agendamentoView.dataFim}"
                                   pattern="dd/MM/yyyy HH:mm"
                                   showTime="true"
                                   required="true"
                                   timeInput="true"
                                   requiredMessage="A data de término é obrigatória."
-                                  mindate="#{agendamentoView.dataMinima}"/>
+                                  mindate="#{agendamentoView.dataMinima}" />
 
-                    <h:outputLabel value="Tutor:" for="tutor" />
-                    <p:selectOneMenu id="tutor"
-                                     value="#{agendamentoView.tutorIdSelecionadoStr}"
-                                     style="width: 100%">
+                    <h:outputLabel for="tutor" value="Tutor:" />
+                    <p:selectOneMenu id="tutor" value="#{agendamentoView.tutorIdSelecionadoStr}" style="width: 100%">
                         <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true"/>
-                        <f:selectItems value="#{agendamentoView.tutoresDisponiveis}"
-                                       var="t"
-                                       itemValue="#{t.id}"
-                                       itemLabel="#{t.nome}" />
+                        <f:selectItems value="#{agendamentoView.tutoresDisponiveis}" var="t"
+                                       itemValue="#{t.id}" itemLabel="#{t.nome}" />
                     </p:selectOneMenu>
+                </p:panelGrid>
 
+                <p:commandButton value="Salvar"
+                                 actionListener="#{agendamentoView.adicionarAgendamento}"
+                                 process="@form"
+                                 update=":formAgenda :formDialogAgendamento:msgsDialogAgendamento"
+                                 oncomplete="if (!args.validationFailed) PF('dialogAgendamento').hide()"
+                                 icon="pi pi-check"
+                                 styleClass="ui-button-success" />
 
-                </h:panelGrid>
+                <p:commandButton value="Cancelar"
+                                 onclick="PF('dialogAgendamento').hide(); return false;"
+                                 type="button"
+                                 icon="pi pi-times"
+                                 styleClass="ui-button-secondary"
+                                 immediate="true" />
 
-                <f:facet name="footer">
-                    <p:commandButton value="Salvar"
-                                     actionListener="#{agendamentoView.adicionarAgendamento}"
-                                     process="@form dialogAgendamento"
-                                     update="@form"
-                                     oncomplete="if (!args.validationFailed) PF('dialogAgendamento').hide()"
-                                     icon="pi pi-check"
-                                     styleClass="ui-button-success" />
-                    <p:commandButton value="Cancelar"
-                                     onclick="PF('dialogAgendamento').hide()"
-                                     type="button"
-                                     icon="pi pi-times"
-                                     styleClass="ui-button-secondary"
-                                     immediate="true"/>
-                </f:facet>
+            </h:form>
+        </p:dialog>
 
-            </p:dialog>
+        <p:dialog id="dialogVisualizarAgendamento"
+                  header="Detalhes do Agendamento"
+                  widgetVar="dialogVisualizarAgendamento"
+                  modal="true"
+                  closable="true"
+                  resizable="false"
+                  width="400"
+                  appendTo="@(body)">
 
-            <p:dialog id="dialogVisualizarAgendamento"
-                      header="Detalhes do Agendamento"
-                      widgetVar="dialogVisualizarAgendamento"
-                      modal="true"
-                      closable="true"
-                      resizable="false"
-                      width="400">
+            <h:form id="formDialogVisualizarAgendamento">
 
-                <h:panelGrid columns="2" cellpadding="5">
+                <p:panelGrid columns="2" cellpadding="5" columnClasses="labelColumn,valueColumn"
+                             style="margin-bottom:10px; width:100%;" columnSpacing="10">
+
                     <h:outputLabel value="Título:" />
                     <h:outputText value="#{agendamentoView.agendamentoSelecionado.titulo}" />
 
@@ -137,21 +141,35 @@
 
                     <h:outputLabel value="Tutor:" />
                     <h:outputText value="#{agendamentoView.agendamentoSelecionado.tutor.nome}" />
-                </h:panelGrid>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Cancelar Agendamento"
-                                     icon="pi pi-times"
-                                     actionListener="#{agendamentoView.cancelarAgendamento}"
-                                     update="@form"
-                                     immediate="true"
-                                     process="@this"
-                                     oncomplete="PF('dialogVisualizarAgendamento').hide()"
-                                     styleClass="ui-button-danger" />
-                </f:facet>
-            </p:dialog>
+                </p:panelGrid>
 
-        </h:form>
+                <p:commandButton value="Cancelar Agendamento"
+                                 icon="pi pi-times"
+                                 onclick="PF('confirmCancelDialog').show(); return false;"
+                                 styleClass="ui-button-danger"
+                                 process="@this"/>
+
+            </h:form>
+
+            <p:confirmDialog id="confirmCancelDialog" widgetVar="confirmCancelDialog" header="Confirmação"
+                             message="Tem certeza que deseja cancelar este agendamento?" severity="alert" modal="true" appendTo="@(body)">
+
+                <p:commandButton value="Sim"
+                                 icon="pi pi-check"
+                                 actionListener="#{agendamentoView.cancelarAgendamento}"
+                                 uupdate="dialogVisualizarAgendamento @form"
+                                 oncomplete="PF('dialogVisualizarAgendamento').hide(); PF('confirmCancelDialog').hide()"
+                                 styleClass="ui-button-danger" />
+
+                <p:commandButton value="Não"
+                                 icon="pi pi-times"
+                                 onclick="PF('confirmCancelDialog').hide();"
+                                 type="button" />
+            </p:confirmDialog>
+
+        </p:dialog>
+
     </ui:define>
 
 </ui:composition>

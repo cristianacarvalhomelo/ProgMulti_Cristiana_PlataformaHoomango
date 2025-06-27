@@ -9,7 +9,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -40,7 +39,6 @@ public class AgendamentoService {
         return count > 0;
     }
 
-
     public void salvar(Agendamento agendamento) {
         if (agendamento.getId() == null) {
             em.persist(agendamento);
@@ -62,6 +60,5 @@ public class AgendamentoService {
             em.remove(agendamento);
         }
     }
-
 }
 

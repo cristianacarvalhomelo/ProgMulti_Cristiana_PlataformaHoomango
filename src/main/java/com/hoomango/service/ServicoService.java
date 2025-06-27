@@ -32,7 +32,6 @@ public class ServicoService implements Serializable {
         em.remove(servicoGerenciado);
     }
 
-
     public void atualizar(Servico servico) { em.merge(servico); }
 
     public List<Servico> listarPorCuidador(Cuidador cuidador) {

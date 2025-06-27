@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "cuidador")
@@ -57,24 +56,5 @@ public class Cuidador {
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
-
-    public String getServicosAsString() {
-        if (servicos == null || servicos.isEmpty()) {
-            return "Nenhum";
-        }
-        return servicos.stream()
-                .map(Servico::getDescricao)
-                .collect(Collectors.joining(", "));
-    }
-
-    @Transient
-    public String getServicosDescricao() {
-        if (servicos == null || servicos.isEmpty()) {
-            return "";
-        }
-        return servicos.stream()
-                .map(Servico::getDescricao)
-                .reduce("", (a, b) -> a + ", " + b);
-    }
 
 }
