@@ -17,6 +17,7 @@ import jakarta.inject.Named;
 public class TutorView {
 
     private Tutor tutor;
+    private String confirmarSenha;
 
     @Inject
     private TutorService tutorService;
@@ -37,6 +38,14 @@ public class TutorView {
 
     public String salvar() {
         try {
+
+            if (!tutor.getSenha().equals(confirmarSenha)) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "As senhas não coincidem.", null));
+                return null;
+            }
+
             Tutor existenteTutor = tutorService.buscarPorEmail(tutor.getEmail());
             Cuidador existenteCuidador = cuidadorService.buscarPorEmail(tutor.getEmail());
 
@@ -46,6 +55,7 @@ public class TutorView {
                 return null;
             }
             tutorService.salvar(tutor);
+            tutor = new Tutor();
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro realizado com sucesso!", null));
 
@@ -75,11 +85,12 @@ public class TutorView {
         return null;
     }
 
-    public Tutor getTutor() {
-        return tutor;
-    }
+    public Tutor getTutor() { return tutor; }
 
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
-    }
+    public void setTutor(Tutor tutor) { this.tutor = tutor; }
+
+    public String getConfirmarSenha() { return confirmarSenha; }
+
+    public void setConfirmarSenha(String confirmarSenha) { this.confirmarSenha = confirmarSenha; }
+
 }

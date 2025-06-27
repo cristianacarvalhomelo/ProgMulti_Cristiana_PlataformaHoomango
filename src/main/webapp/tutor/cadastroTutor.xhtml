@@ -31,7 +31,7 @@
                         <p:outputLabel for="nome" value="Nome:" style="display: inline-block; width: 80px; font-weight: bold;" />
                         <p:inputText id="nome" value="#{tutorView.tutor.nome}" required="true"
                                      placeholder="Digite seu nome"
-                                     style="width: calc(100% - 90px);" />
+                                     style="width: calc(100% - 90px); text-transform: capitalize;" />
                     </div>
 
                     <div style="margin-bottom: 15px;">
@@ -47,6 +47,12 @@
                                     feedback="true" promptLabel="Digite sua senha"
                                     weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte"
                                     style="width: calc(100% - 90px);" />
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                    <p:outputLabel for="confirmarSenha" value="Confirmar Senha:" style="display: inline-block; width: 80px; font-weight: bold;" />
+                    <p:password id="confirmarSenha" value="#{tutorView.confirmarSenha}" required="true"
+                                feedback="false" style="width: calc(100% - 90px);" />
                     </div>
 
                     <p:separator style="margin-bottom: 20px;" />

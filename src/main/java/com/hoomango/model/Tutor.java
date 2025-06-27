@@ -12,6 +12,20 @@ public class Tutor {
     @Column(name = "tutor_id")
     private Long id;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tutor tutor = (Tutor) o;
+        return id != null && id.equals(tutor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+
     @Size(min = 1, max = 30)
     private String nome;
 

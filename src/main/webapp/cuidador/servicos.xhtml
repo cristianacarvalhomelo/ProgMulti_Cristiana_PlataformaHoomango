@@ -11,8 +11,6 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="pageTitle">Serviços</ui:define>
-
     <ui:define name="content">
 
         <p:panel id="panelServicos" header="Meus Serviços">
@@ -22,10 +20,13 @@
                 <p:commandButton value="Novo Serviço" icon="pi pi-plus"
                                  oncomplete="PF('dlgServico').show()" update="formServicoDlg" />
 
+                <br/><br/>
+
                 <p:dataTable id="tabelaServicos" var="s" value="#{servicoView.listaServicos}"
                              emptyMessage="Nenhum serviço cadastrado."
                              rowKey="#{s.id}" paginator="true" rows="5"
                              rowsPerPageTemplate="5,10,15"
+                             paginatorPosition="bottom"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="Listando de {startRecord} até {endRecord} de {totalRecords}">
 

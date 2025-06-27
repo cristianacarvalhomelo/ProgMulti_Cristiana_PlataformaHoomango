@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/template.xhtml">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{tutorPerfilView.id}" />
+            <f:viewAction action="#{tutorPerfilView.init}" onPostBack="false" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:panel header="Perfil de #{tutorPerfilView.tutor.nome}">
+            <h:panelGrid columns="2" columnClasses="label,valor" style="width:100%; margin-bottom: 20px;" cellpadding="5">
+
+                <h:outputText value="Nome:"/>
+                <h:outputText value="#{tutorPerfilView.tutor.nome}"/>
+
+                <h:outputText value="Email:"/>
+                <h:outputText value="#{tutorPerfilView.tutor.email}"/>
+
+                <p:linkButton value="Abrir Chat"
+                              outcome="chatCuidador"
+                              icon="pi pi-comments">
+                    <f:param name="tutorId" value="#{tutorPerfilView.tutor.id}" />
+                </p:linkButton>
+
+            </h:panelGrid>
+        </p:panel>
+
+        <p:separator/>
+
+        <p:panel header="Pets do Tutor">
+            <p:dataList value="#{tutorPerfilView.pets}" var="pet" type="unordered"
+                        itemStyle="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Nome:"/>
+                    <h:outputText value="#{pet.nome}"/>
+
+                    <h:outputText value="Espécie:"/>
+                    <h:outputText value="#{pet.especie}"/>
+
+                    <h:outputText value="Raça:"/>
+                    <h:outputText value="#{pet.raca}"/>
+
+                    <h:outputText value="Data Nascimento:"/>
+                    <h:outputText value="#{pet.dataNascimento} "/>
+
+                    <h:outputText value="Observações:"/>
+                    <h:outputText value="#{pet.observacoes} "/>
+
+                </h:panelGrid>
+                <p:separator/>
+            </p:dataList>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

@@ -18,7 +18,7 @@ public class TutorService implements Serializable {
 
     public void salvar(Tutor tutor) {
         tutor.setSenha(PasswordUtil.hashPassword(tutor.getSenha()));
-        em.persist(tutor); 
+        em.persist(tutor);
     }
 
     public void atualizar(Tutor tutor) { em.merge(tutor); }
@@ -53,5 +53,12 @@ public class TutorService implements Serializable {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public Tutor buscarPorId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id to load is required for loading");
+        }
+        return em.find(Tutor.class, id);
     }
 }

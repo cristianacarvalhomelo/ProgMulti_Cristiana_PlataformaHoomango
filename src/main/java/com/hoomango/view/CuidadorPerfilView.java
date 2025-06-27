@@ -65,4 +65,3 @@ public class CuidadorPerfilView implements Serializable {
     public Cuidador getCuidador() { return cuidador; }
     public void  setCuidador(Cuidador cuidador) { this.cuidador = cuidador; }
 }
-

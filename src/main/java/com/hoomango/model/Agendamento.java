@@ -3,6 +3,7 @@ package com.hoomango.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "agendamento")
@@ -14,14 +15,16 @@ public class Agendamento implements Serializable {
 
     private String titulo;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime dataInicio;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime dataFim;
 
-   @ManyToOne
-   private Cuidador cuidador;
+    @ManyToOne
+    private Cuidador cuidador;
+
+    @ManyToOne
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -37,5 +40,8 @@ public class Agendamento implements Serializable {
 
     public Cuidador getCuidador() { return cuidador; }
     public void setCuidador(Cuidador cuidador) { this.cuidador = cuidador; }
+
+    public Tutor getTutor() { return tutor; }
+    public void setTutor(Tutor tutor) { this.tutor = tutor; }
 }
 

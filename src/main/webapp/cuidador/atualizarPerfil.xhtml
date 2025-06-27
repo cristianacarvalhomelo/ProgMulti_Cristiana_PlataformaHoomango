@@ -3,9 +3,6 @@
                 xmlns:h="jakarta.faces.html"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/layout/template.xhtml">
-    <ui:define name="title">
-        Atualizar Perfil - Cuidador
-    </ui:define>
 
     <ui:define name="content">
 
@@ -17,7 +14,7 @@
                 <h:panelGrid columns="2" cellpadding="5" style="width:100%;">
 
                     <h:outputLabel for="nome" value="Nome:" />
-                    <p:inputText id="nome" value="#{cuidadorView.cuidador.nome}" required="true" />
+                    <p:inputText id="nome" value="#{cuidadorView.cuidador.nome}" required="true" style="text-transform: capitalize"/>
 
                     <h:outputLabel value="E-mail:" />
                     <h:outputText value="#{cuidadorView.cuidador.email}" />

@@ -5,10 +5,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/layout/template.xhtml">
 
-    <ui:define name="pageTitle">Agenda de Serviços</ui:define>
-
     <ui:define name="content">
+        <h:outputStylesheet>
+            .ui-selectonemenu-panel {
+                z-index: 1105 !important;
+            }
+        </h:outputStylesheet>
+
         <h:form id="formAgenda">
+
+            <p:messages id="msgsAgendamento" showDetail="true" autoUpdate="true"/>
 
             <p:panel header="Agende os serviços do cuidador"
                      style="max-width: 1200px; margin: 20px auto; text-align: center; border-radius: 12px;">
@@ -26,6 +32,12 @@
                             listener="#{agendamentoView.onDateSelect}"
                             update="dialogAgendamento"
                             oncomplete="PF('dialogAgendamento').show()" />
+
+                    <p:ajax event="eventSelect"
+                            listener="#{agendamentoView.onEventSelect}"
+                            update="dialogVisualizarAgendamento"
+                            oncomplete="PF('dialogVisualizarAgendamento').show()" />
+
                 </p:schedule>
 
                 <p:commandButton value="Novo Agendamento"
@@ -47,7 +59,7 @@
                       width="400"
                       styleClass="customDialog">
 
-                <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid columns="2" cellpadding="5" >
 
                     <h:outputLabel value="Título:"/>
                     <p:inputText value="#{agendamentoView.titulo}"
@@ -55,28 +67,45 @@
                                  requiredMessage="O título é obrigatório."/>
 
                     <h:outputLabel value="Início:"/>
-                    <p:calendar value="#{agendamentoView.dataInicio}"
-                                pattern="dd/MM/yyyy HH:mm"
-                                showTime="true"
-                                required="true"
-                                requiredMessage="A data de início é obrigatória."/>
+                    <p:datePicker value="#{agendamentoView.dataInicio}"
+                                  pattern="dd/MM/yyyy HH:mm"
+                                  showTime="true"
+                                  required="true"
+                                  timeInput="true"
+                                  requiredMessage="A data de início é obrigatória."
+                                  mindate="#{agendamentoView.dataMinima}"/>
 
                     <h:outputLabel value="Término:"/>
-                    <p:calendar value="#{agendamentoView.dataFim}"
-                                pattern="dd/MM/yyyy HH:mm"
-                                showTime="true"
-                                required="true"
-                                requiredMessage="A data de término é obrigatória."/>
+                    <p:datePicker value="#{agendamentoView.dataFim}"
+                                  pattern="dd/MM/yyyy HH:mm"
+                                  showTime="true"
+                                  required="true"
+                                  timeInput="true"
+                                  requiredMessage="A data de término é obrigatória."
+                                  mindate="#{agendamentoView.dataMinima}"/>
+
+                    <h:outputLabel value="Tutor:" for="tutor" />
+                    <p:selectOneMenu id="tutor"
+                                     value="#{agendamentoView.tutorIdSelecionadoStr}"
+                                     style="width: 100%">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true"/>
+                        <f:selectItems value="#{agendamentoView.tutoresDisponiveis}"
+                                       var="t"
+                                       itemValue="#{t.id}"
+                                       itemLabel="#{t.nome}" />
+                    </p:selectOneMenu>
+
 
                 </h:panelGrid>
 
                 <f:facet name="footer">
                     <p:commandButton value="Salvar"
                                      actionListener="#{agendamentoView.adicionarAgendamento}"
-                                     update="formAgenda msgsAgendamento"
+                                     process="@form dialogAgendamento"
+                                     update="@form"
                                      oncomplete="if (!args.validationFailed) PF('dialogAgendamento').hide()"
                                      icon="pi pi-check"
-                                     styleClass="ui-button-success"/>
+                                     styleClass="ui-button-success" />
                     <p:commandButton value="Cancelar"
                                      onclick="PF('dialogAgendamento').hide()"
                                      type="button"
@@ -85,6 +114,40 @@
                                      immediate="true"/>
                 </f:facet>
 
+            </p:dialog>
+
+            <p:dialog id="dialogVisualizarAgendamento"
+                      header="Detalhes do Agendamento"
+                      widgetVar="dialogVisualizarAgendamento"
+                      modal="true"
+                      closable="true"
+                      resizable="false"
+                      width="400">
+
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Título:" />
+                    <h:outputText value="#{agendamentoView.agendamentoSelecionado.titulo}" />
+
+                    <h:outputLabel value="Início:" />
+                    <h:outputText value="#{agendamentoView.agendamentoSelecionado.dataInicio}" />
+
+                    <h:outputLabel value="Término:" />
+                    <h:outputText value="#{agendamentoView.agendamentoSelecionado.dataFim}" />
+
+                    <h:outputLabel value="Tutor:" />
+                    <h:outputText value="#{agendamentoView.agendamentoSelecionado.tutor.nome}" />
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar Agendamento"
+                                     icon="pi pi-times"
+                                     actionListener="#{agendamentoView.cancelarAgendamento}"
+                                     update="@form"
+                                     immediate="true"
+                                     process="@this"
+                                     oncomplete="PF('dialogVisualizarAgendamento').hide()"
+                                     styleClass="ui-button-danger" />
+                </f:facet>
             </p:dialog>
 
         </h:form>

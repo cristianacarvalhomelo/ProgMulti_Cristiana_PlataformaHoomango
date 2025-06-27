@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/layout/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="formChatCuidador">
+
+            <p:growl id="growl" showDetail="true" life="5000" />
+
+            <audio id="audioNotificacao" src="#{request.contextPath}/resources/sounds/notification.mp3" preload="auto"/>
+
+            <div style="display: flex; height: 600px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
+
+                <div style="width: 30%; background: #f1f1f1; overflow-y: auto;">
+                    <ui:repeat value="#{chatCuidadorView.tutores}" var="t">
+                        <p:commandButton value="#{t.nome}"
+                                         action="#{chatCuidadorView.selecionarTutor(t)}"
+                                         update="@form"
+                                         style="width:100%; text-align:left; padding:10px;"
+                                         icon="pi pi-user"/>
+                    </ui:repeat>
+                </div>
+
+                <div style="flex:1; display: flex; flex-direction: column;">
+
+                    <div style="background: #ededed; padding:10px;">
+                        <h:link outcome="perfilTutor.xhtml"
+                                value="#{chatCuidadorView.tutorSelecionado.nome}"
+                                rendered="#{not empty chatCuidadorView.tutorSelecionado}"
+                                style="color: #333; text-decoration: none; font-weight: bold;" >
+                            <f:param name="id" value="#{chatCuidadorView.tutorSelecionado.id}" />
+                        </h:link>
+                    </div>
+
+                    <p:poll interval="3"
+                            listener="#{chatCuidadorView.atualizarMensagens}"
+                            update="formChatCuidador:mensagensCuidador formChatCuidador:growl"
+                            onstart="salvarScroll()"
+                            oncomplete="restaurarScroll()" />
+
+
+                    <p:outputPanel id="mensagensContainer"
+                                   style="flex:1; overflow-y:auto; padding:10px; background:#fff; display:flex; flex-direction: column;">
+                        <p:outputPanel id="mensagensCuidador" styleClass="mensagensCuidador">
+                            <ui:repeat value="#{chatCuidadorView.mensagens}" var="msg">
+                                <div style="display: flex; justify-content: #{msg.enviadoPorTutor ? 'flex-start' : 'flex-end'}; margin:5px 0;">
+                                    <div style="padding:8px; border-radius:8px;
+                        background-color:#{msg.enviadoPorTutor ? '#dcf8c6' : '#f0f0f0'};
+                        max-width: 70%;
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                        <strong>#{msg.enviadoPorTutor ? msg.tutor.nome : 'Você'}:</strong>
+                                        <div>#{msg.texto}</div>
+                                        <small style="color: #888;">#{msg.dataHora}</small>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+
+                    <div style="display:flex; padding:10px; background:#f9f9f9;">
+                        <p:inputTextarea id="campoMensagem"
+                                         value="#{chatCuidadorView.novaMensagem}"
+                                         autoResize="false"
+                                         rows="2"
+                                         style="flex:1; margin-right:8px;"/>
+
+
+                        <p:commandButton icon="pi pi-send"
+                                         action="#{chatCuidadorView.enviar}"
+                                         update="formChatCuidador:mensagensCuidador formChatCuidador:campoMensagem formChatCuidador:growl"
+                                         oncomplete="rolarParaBaixo()"
+                                         styleClass="ui-button-success"/>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </h:form>
+        <h:outputScript>
+            var scrollPos = 0;
+
+            function salvarScroll() {
+            var el = document.getElementById('mensagensContainer');
+            if (el) {
+            scrollPos = el.scrollTop;
+            }
+            }
+
+            function restaurarScroll() {
+            var el = document.getElementById('mensagensContainer');
+            if (el) {
+            el.scrollTop = scrollPos;
+            }
+            }
+            function rolarParaBaixo() {
+            var container = document.getElementById("formChatCuidador:mensagensContainer");
+            if (container) {
+            container.scrollTop = container.scrollHeight;
+            }
+            }
+            function notifyUser(title, message) {
+            if (!("Notification" in window)) {
+            return;
+            }
+            if (Notification.permission === "granted") {
+            new Notification(title, { body: message });
+            } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function(permission) {
+            if (permission === "granted") {
+            new Notification(title, { body: message });
+            }
+            });
+            }
+            }
+        </h:outputScript>
+
+
+    </ui:define>
+</ui:composition>
+
+

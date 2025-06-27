@@ -11,8 +11,6 @@
         </f:metadata>
     </ui:define>
 
-    <ui:define name="pageTitle">Pets</ui:define>
-
     <ui:define name="content">
         <p:panel id="panelPets" header="Meus Pets">
 
@@ -21,10 +19,13 @@
                 <p:commandButton value="Novo Pet" icon="pi pi-plus"
                                  oncomplete="PF('dlgPet').show()" update="formPetDlg"/>
 
+                <br/><br/>
+
                 <p:dataTable id="tabelaPets" var="p" value="#{petView.listaPets}"
                              emptyMessage="Nenhum pet encontrado"
                              rowKey="#{p.id}" paginator="true" rows="5"
                              rowsPerPageTemplate="5,10,15"
+                             paginatorPosition="bottom"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="Listando de {startRecord} até {endRecord} de {totalRecords}">
 

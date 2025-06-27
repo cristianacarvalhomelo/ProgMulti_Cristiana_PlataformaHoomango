@@ -4,12 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/layout2/template.xhtml">
 
-    <ui:define name="title">
-        Atualizar Perfil - Tutor
-    </ui:define>
-
     <ui:define name="content">
-
         <h:form enctype="multipart/form-data">
             <p:panel header="Atualizar Perfil - Tutor" style="max-width: 500px; margin: 0 auto;">
 
@@ -18,7 +13,7 @@
                 <h:panelGrid columns="2" cellpadding="5" style="width:100%;">
 
                     <h:outputLabel for="nome" value="Nome:" />
-                    <p:inputText id="nome" value="#{tutorView.tutor.nome}" required="true" />
+                    <p:inputText id="nome" value="#{tutorView.tutor.nome}" required="true" style="text-transform: capitalize"/>
 
                     <h:outputLabel value="E-mail:" />
                     <h:outputText value="#{tutorView.tutor.email}" />

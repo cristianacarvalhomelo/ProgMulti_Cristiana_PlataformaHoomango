@@ -4,6 +4,7 @@ import com.hoomango.LoginPage;
 import com.hoomango.model.Cuidador;
 import com.hoomango.model.Servico;
 import com.hoomango.model.Tutor;
+import com.hoomango.service.ChatService;
 import com.hoomango.service.CuidadorService;
 import com.hoomango.service.ServicoService;
 import com.hoomango.service.TutorService;
@@ -24,12 +25,16 @@ public class CuidadorView {
     private List<Cuidador> listaCuidadores;
     private List<Servico> listaServicos;
     private Cuidador cuidadorComServicos;
+    private String confirmarSenha;
 
     @Inject
     private CuidadorService cuidadorService;
 
     @Inject
     private TutorService tutorService;
+
+    @Inject
+    private ChatService chatService;
 
     @Inject
     private LoginPage loginPage;
@@ -58,6 +63,14 @@ public class CuidadorView {
 
     public String salvar() {
         try {
+
+            if (!cuidador.getSenha().equals(confirmarSenha)) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "As senhas não coincidem.", null));
+                return null;
+            }
+
             Cuidador existenteCuidador = cuidadorService.buscarPorEmail(cuidador.getEmail());
             Tutor existenteTutor = tutorService.buscarPorEmail(cuidador.getEmail());
 
@@ -68,6 +81,7 @@ public class CuidadorView {
             }
 
             cuidadorService.salvar(cuidador);
+            cuidador = new Cuidador();
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro realizado com sucesso!", null));
 
@@ -90,6 +104,10 @@ public class CuidadorView {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao atualizar perfil.", null));
         }
+    }
+
+    public List<Tutor> getTutoresComQuemConversou() {
+        return chatService.listarTutoresPorCuidador(loginPage.getCuidadorLogado());
     }
 
     public Cuidador getCuidador() {
@@ -127,4 +145,9 @@ public class CuidadorView {
     public void setCuidadorComServicos(Cuidador cuidadorComServicos) {
         this.cuidadorComServicos = cuidadorComServicos;
     }
+
+    public String getConfirmarSenha() { return confirmarSenha; }
+
+    public void setConfirmarSenha(String confirmarSenha) { this.confirmarSenha = confirmarSenha; }
+
 }
